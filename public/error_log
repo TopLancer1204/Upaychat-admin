@@ -1,0 +1,2 @@
+[29-Sep-2020 12:49:49 UTC] PHP Fatal error:  Method App\Models\User::__toString() must not throw an exception, caught ErrorException: Undefined variable: donnar in /home/iqi4rdhf4xf4/public_html/app/Http/Controllers/API/TransactionController.php on line 0
+[29-Sep-2020 12:50:08 UTC] PHP Fatal error:  Method App\Models\User::__toString() must not throw an exception, caught ErrorException: Undefined variable: donnar in /home/iqi4rdhf4xf4/public_html/app/Http/Controllers/API/TransactionController.php on line 0
