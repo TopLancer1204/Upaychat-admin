@@ -131,6 +131,9 @@ class UserController extends Controller
             $response['data'] = [];
             return response()->json($response);
         } else {
+            $code = Helper::generateRandomNumber();
+            // Helper::sendEmail($request->email, "Your UpayChat Code is " . $code.". It expires in 5 minutes.", "UpayChat Email Verificaiton");
+            $response['message'] = $code;
             $response['status'] = "true";
             return response()->json($response);
         }
@@ -184,7 +187,7 @@ class UserController extends Controller
             return response()->json($response);
         }
 
-        $input = $request->all();
+        $input = $request->merge(['email_verified_at' => now()])->all();
         $input['password'] = bcrypt($input['password']);
 
         $user = User::create($input);

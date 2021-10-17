@@ -88,60 +88,23 @@ class TransactionController extends Controller
 
         $trlist = array();
         foreach ($transactions as $tran) {
-            $message = '';
-            $touserImage = '';
-
+            $trans_user;
             switch ($tran->transaction_type) {
                 case 'pay':
-                    if ($tran->user_id == $userid) {
-                        $receiver = User::find($tran->touser_id);
-                        $message = "You paid ₦" . number_format($tran->amount, 2, '.', ',') . " to " . $receiver->firstname . " " . $receiver->lastname;
-                        $touserImage = $receiver->avatar;
-                    } else {
-                        $donnar = User::find($tran->user_id);
-                        $message = $donnar->firstname . " " . $donnar->lastname . " paid you ₦" . number_format($tran->amount, 2, '.', ',');
-                        $touserImage = $donnar->avatar;
-                    }
-                    break;
-
                 case 'request':
-                    if ($tran->user_id == $userid) {
-                        $receiver = User::find($tran->touser_id);
-                        $message = "You requested ₦" . number_format($tran->amount, 2, '.', ',') . " from " . $receiver->firstname . " " . $receiver->lastname;
-                        $touserImage = $receiver->avatar;
-                    } else {
-                        $donnar = User::find($tran->user_id);
-                        $message = $donnar->firstname . " " . $donnar->lastname . " requested ₦" . number_format($tran->amount, 2, '.', ',') . " from you";
-                        $touserImage = $donnar->avatar;
-                    }
+                    if ($tran->user_id == $userid) $trans_user = User::find($tran->touser_id);
+                    else $trans_user = User::find($tran->user_id);
                     break;
-
                 case "withdrawal":
-                    $message = "You transferred ₦" . number_format($tran->amount, 2, '.', ',') . " to your bank";
-                    $donnar = User::find($tran->user_id);
-                    $touserImage = $donnar->avatar;
-                    break;
-
                 case "wallet":
-                    $message = "You added ₦" . number_format($tran->amount, 2, '.', ',') . " to your wallet";
-                    $donnar = User::find($tran->user_id);
-                    $touserImage = $donnar->avatar;
-                    break;
-
                 case "takeback":
-                    $donnar = User::find($tran->user_id);
-                    $message = "You take back ₦" . number_format($tran->amount, 2, '.', ',') . " from " . $donnar->firstname . " " . $donnar->lastname;
-                    $touserImage = $donnar->avatar;
+                    $trans_user = User::find($tran->user_id);
                     break;
             }
 
             $trlist[] = array(
-                'id' => $tran->id,
-                'amount' => $tran->amount,
-                'timestamp' => $tran->created_at,
-                'to_userimage' => $touserImage,
-                'message' => $message,
-                'privacy' => $tran->privacy,
+                'tran' => $tran,
+                'user' => $trans_user
             );
         }
         $response['status'] = "true";

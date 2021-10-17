@@ -53,6 +53,13 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/bankdetails', 'API\BankDetailController@bankdetails'); // list all banks of user
     Route::post('/getbank', 'API\BankDetailController@getbank'); // get details of a particual bank
     Route::post('/updatebank', 'API\BankDetailController@updateaddbank'); // get details of a particual bank
+    Route::post('/deletebank', 'API\BankDetailController@deletebank'); // get details of a particual bank
+    // **********************************************************************************************************
+    Route::post('/addcard', 'API\CardDetailController@addcard'); // add a card of user
+    Route::post('/carddetails', 'API\CardDetailController@carddetails'); // list all cards of user
+    Route::post('/getcard', 'API\CardDetailController@getcard'); // get details of a particual card
+    Route::post('/updatecard', 'API\CardDetailController@updateaddcard'); // get details of a particual card
+    Route::post('/deletecard', 'API\CardDetailController@deletecard'); // get details of a particual card
 
     // **********************************************************************************************************
 
@@ -85,4 +92,6 @@ Route::group(['middleware' => 'auth:api'], function () {
         $response['data'] = [];
         return response()->json($response);
     });
+    Route::get('/id_verify', 'API\IDVerificationController@index');
+    Route::post('/id_verify', 'API\IDVerificationController@verify');
 });

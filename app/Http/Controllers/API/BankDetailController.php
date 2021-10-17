@@ -20,7 +20,7 @@ class BankDetailController extends Controller
         $user = Auth::user();
         $userid = $user->id;
 
-        $banklist = BankDetail::where('user_id', $userid)->get();
+        $banklist = BankDetail::where('user_id', $userid)->orderby('updated_at', 'desc')->get();
         $blist = array();
 
         if (count($banklist) < 1)
@@ -117,5 +117,12 @@ class BankDetailController extends Controller
             $response['data'] = '';
             return response()->json($response);
         }
+    }
+    public function deletebank(Request $request)
+    {
+        $bankid = $request->bankid;
+        BankDetail::where('id', $bankid)->delete();
+        $response['status'] = "true";
+        return response()->json($response);
     }
 }
