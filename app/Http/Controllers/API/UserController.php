@@ -132,7 +132,7 @@ class UserController extends Controller
             return response()->json($response);
         } else {
             $code = Helper::generateRandomNumber();
-            // Helper::sendEmail($request->email, "Your UpayChat Code is " . $code.". It expires in 5 minutes.", "UpayChat Email Verificaiton");
+            Helper::sendEmail($request->email, "Your UpayChat Code is " . $code.". It expires in 5 minutes.", "UpayChat Email Verificaiton");
             $response['message'] = $code;
             $response['status'] = "true";
             return response()->json($response);
