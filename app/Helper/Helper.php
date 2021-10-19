@@ -19,13 +19,16 @@ class Helper
 
     public static function sendEmail($email, $msg, $subject)
     {
-        $data = array('msg' => $msg);
+        try {
+            $data = array('msg' => $msg);
 
-        Mail::send('backend.transactions.mail', $data, function ($message) use ($email, $subject) {
-            $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-            $message->to($email);
-            $message->subject($subject);
-        });
+            Mail::send('backend.transactions.mail', $data, function ($message) use ($email, $subject) {
+                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                $message->to($email);
+                $message->subject($subject);
+            });
+        } catch (\Throwable $th) {
+        }
     }
 
     public static function sendSMS($mobile, $msg)

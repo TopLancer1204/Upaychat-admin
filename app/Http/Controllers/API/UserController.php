@@ -179,6 +179,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'fcm_token' => 'required',
+            'birthday' => 'required',
         ]);
         if ($validator->fails()) {
             $errmess = implode(', ', $validator->messages()->all());
@@ -298,6 +299,7 @@ class UserController extends Controller
                 'mobile' => $user->mobile,
                 'roll' => $user->roll,
                 'profile_image' => $user->avatar,
+                'birthday' => $user->birthday,
             );
 
             $response['status'] = "true";
@@ -326,6 +328,7 @@ class UserController extends Controller
         try {
             $user->firstname = $data['firstname'];
             $user->lastname = $data['lastname'];
+            $user->birthday = $data['birthday'];
 
             if ($request->has('profile_image')) {
                 File::delete(public_path($user->avatar));
@@ -340,6 +343,7 @@ class UserController extends Controller
             $response['message'] = "Profile updated successfully.";
             $response['firstname'] = $request->input('firstname');
             $response['lastname'] = $request->input('lastname');
+            $response['birthday'] = $request->input('birthday');
             $response['profile_image'] = $user->avatar;
 
             return response()->json($response);
