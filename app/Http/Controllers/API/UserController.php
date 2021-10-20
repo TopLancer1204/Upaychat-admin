@@ -326,7 +326,6 @@ class UserController extends Controller
         $user = Auth::user();
 
         try {
-            mobile
             if ($request->has('mobile')) $user->mobile = $data['mobile'];
             if ($request->has('firstname')) $user->firstname = $data['firstname'];
             if ($request->has('lastname')) $user->lastname = $data['lastname'];
