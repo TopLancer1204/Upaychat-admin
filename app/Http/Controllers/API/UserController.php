@@ -326,9 +326,11 @@ class UserController extends Controller
         $user = Auth::user();
 
         try {
-            $user->firstname = $data['firstname'];
-            $user->lastname = $data['lastname'];
-            $user->birthday = $data['birthday'];
+            mobile
+            if ($request->has('mobile')) $user->mobile = $data['mobile'];
+            if ($request->has('firstname')) $user->firstname = $data['firstname'];
+            if ($request->has('lastname')) $user->lastname = $data['lastname'];
+            if ($request->has('birthday')) $user->birthday = $data['birthday'];
 
             if ($request->has('profile_image')) {
                 File::delete(public_path($user->avatar));
@@ -341,9 +343,10 @@ class UserController extends Controller
 
             $response['status'] = "true";
             $response['message'] = "Profile updated successfully.";
-            $response['firstname'] = $request->input('firstname');
-            $response['lastname'] = $request->input('lastname');
-            $response['birthday'] = $request->input('birthday');
+            $response['firstname'] = $user->firstname;
+            $response['lastname'] = $user->lastname;
+            $response['birthday'] = $user->birthday;
+            $response['mobile'] = $user->mobile;
             $response['profile_image'] = $user->avatar;
 
             return response()->json($response);
