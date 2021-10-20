@@ -175,7 +175,6 @@ class UserController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'username' => 'required|unique:users',
-            'mobile' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'fcm_token' => 'required',
@@ -208,7 +207,8 @@ class UserController extends Controller
         ]);
 
         $pendings = Transaction::where([['touser_id', $request->email], ['status', 4]])
-            ->orWhere([['touser_id', $request->mobile], ['status', 4]])->get();
+            // ->orWhere([['touser_id', $request->mobile], ['status', 4]])
+            ->get();
 
         foreach ($pendings as $pending) {
             $pending->touser_id = $uid;
