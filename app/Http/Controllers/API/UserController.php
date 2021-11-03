@@ -287,26 +287,32 @@ class UserController extends Controller
                 (Auth::attempt(['mobile' => request('login_user'), 'password' => request('password')]) ||
                     Auth::attempt(['mobile' => '+' . request('login_user'), 'password' => request('password')])))) {
             $user = Auth::user();
-            $user->fcm_token = $request->fcm_token;
-            $user->save();
+            if($user->user_status == "off") {
+                $response['status'] = "false";
+                $response['message'] = "Your account suspended.";
+                $response['token'] = "";
+                $response['data'] = [];
+            } else {
+                $user->fcm_token = $request->fcm_token;
+                $user->save();
+                $userdata = array(
+                    'id' => $user->id,
+                    'firstname' => $user->firstname,
+                    'lastname' => $user->lastname,
+                    'username' => $user->username,
+                    'email' => $user->email,
+                    'mobile' => $user->mobile,
+                    'roll' => $user->roll,
+                    'profile_image' => $user->avatar,
+                    'birthday' => $user->birthday,
+                );
 
-            $userdata = array(
-                'id' => $user->id,
-                'firstname' => $user->firstname,
-                'lastname' => $user->lastname,
-                'username' => $user->username,
-                'email' => $user->email,
-                'mobile' => $user->mobile,
-                'roll' => $user->roll,
-                'profile_image' => $user->avatar,
-                'birthday' => $user->birthday,
-            );
-
-            $response['status'] = "true";
-            $response['message'] = "Successfully logged in.";
-            $response['token'] = $user->createToken(config('vms.myToken'))->accessToken;
-            $response['data'] = $userdata;
-        } else {
+                $response['status'] = "true";
+                $response['message'] = "Successfully logged in.";
+                $response['token'] = $user->createToken(config('vms.myToken'))->accessToken;
+                $response['data'] = $userdata;
+            }
+    } else {
             $response['status'] = "false";
             $response['message'] = "Invalid username or password.";
             $response['token'] = "";

@@ -43,28 +43,23 @@
                                 <!--<td>{{$user->roleName->rol_name}}</td>-->
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->mobile}}</td>
-                                    <td>
+                                    <td id="tbl_status_{{$user->id}}">
                                         @if($user->user_status == 'on')
                                             <button class="btn btn-success btn-xs">Active</button>
                                         @else
-                                            <button class="btn btn-danger btn-xs">Suspendedd</button>
+                                            <button class="btn btn-danger btn-xs">Suspended</button>
                                         @endif
                                     </td>
                                     <td>
-                                    <!--<a href="{{route('user-edit',$user->id)}}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i>&nbsp;Edit</a>
-                                        <button class="btn btn-danger btn-xs" onclick="deleteUsers(this,'{{$user->id}}')"><i class="fas fa-trash-alt"></i>&nbsp;Delete</button> -->
-
-                                        @if($user->user_status == 'on')
-                                            <button class="btn btn-success btn-xs"
-                                                    onclick="userStatus(this,'{{$user->id}}','off')"><i
-                                                    class="fas fa-eye-slash"></i>Suspend
-                                            </button>
-                                        @else
-                                            <button class="btn btn-success btn-xs"
-                                                    onclick="userStatus(this,'{{$user->id}}','on')"><i
-                                                    class="fas fa-eye"></i>Activate
-                                            </button>
-                                        @endif
+                                        {{-- <a href="{{route('user-edit',$user->id)}}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i>&nbsp;Edit</a>
+                                        <button class="btn btn-danger btn-xs" onclick="deleteUsers(this,'{{$user->id}}')"><i class="fas fa-trash-alt"></i>&nbsp;Delete</button> --}}
+                                        <span id="tbl_action_{{$user->id}}">
+                                            @if($user->user_status == 'on')
+                                                <button class="btn btn-success btn-xs" onclick="userStatus(this,'{{$user->id}}','off')"><i class="fas fa-eye-slash"></i>Suspend </button>
+                                            @else
+                                                <button class="btn btn-success btn-xs" onclick="userStatus(this,'{{$user->id}}','on')"><i class="fas fa-eye"></i>Activate</button>
+                                            @endif
+                                        </span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -143,18 +138,21 @@
                 },
                 success: function (response) {
                     if (response.status == 'success') {
+                        $(`#tbl_status_${id}`).empty();
+                        $(`#tbl_action_${id}`).empty();
+                        if(user_status == 'on') {
+                            $(`#tbl_status_${id}`).append('<button class="btn btn-success btn-xs">Active</button>');
+                            $(`#tbl_action_${id}`).append(`<button class="btn btn-success btn-xs" onclick="userStatus(this,'${id}','off')"><i class="fas fa-eye-slash"></i>Suspend </button>`);
+                        } else{
+                            $(`#tbl_status_${id}`).append('<button class="btn btn-danger btn-xs">Suspended</button>');
+                            $(`#tbl_action_${id}`).append(`<button class="btn btn-success btn-xs" onclick="userStatus(this,'${id}','on')"><i class="fas fa-eye"></i>Activate </button>`);
+                        }
                         toastr.success(response.content, response.title);
-                        setInterval(function () {
-                            window.location.reload();
-                        }, 5000);
                     } else {
                         toastr.error(response.content, response.title);
-                        setInterval(function () {
-                            window.location.reload();
-                        }, 5000);
+                        window.location.reload();
                     }
                 }
-
             })
 
         }

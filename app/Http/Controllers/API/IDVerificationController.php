@@ -26,7 +26,16 @@ class IDVerificationController extends Controller
     public function verify(Request $request)
     {
         $user_id = Auth::user()->id;
-        $verify_id = IDVerification::create($request->merge(['user_id' => $user_id])->all())->id;
+        $exist = IDVerification::where('user_id', $user_id)->first();
+        if($exist != null) {
+            $verify_id = $exist->id;
+
+            $fillable = (new IDVerification())->getFillable();
+            IDVerification::where('user_id', $user_id)->update($request->merge(['status' => 0])->only($fillable));
+            IDVerificationMeta::where('verify_id', $verify_id)->delete();
+        } else {
+            $verify_id = IDVerification::create($request->merge(['user_id' => $user_id])->all())->id;
+        }
 
         if ($request->hasFile('gover_files')) {
             $files = $request->file('gover_files');

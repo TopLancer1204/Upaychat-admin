@@ -60,6 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/password', 'Backend\ProfileController@getAdminEditPass')->name("password");
     Route::post('/savepassword', 'Backend\ProfileController@savepassword')->name("savepassword");
+	Route::resource('identity', 'Backend\IdentityController');
 
     Route::prefix("faq")->middleware('Admin')->group(function () {
         Route::get('/', 'Backend\FaqController@index')->name("faq");
