@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\IDVerification;
+use App\Models\IDVerificationMeta;
 
 class IdentityController extends Controller
 {
@@ -93,6 +94,12 @@ class IdentityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            IDVerification::where('id', $id)->delete();
+            IDVerificationMeta::where('verify_id', $id)->delete();
+            return response(['status' => 'success', 'title' => 'Success', 'content' => 'Successfully deleted identity info.']);
+        } catch (\Throwable $th) {
+            return response(['status' => 'error', 'title' => 'Error', 'content' => $th->getMessages()]);
+        }
     }
 }

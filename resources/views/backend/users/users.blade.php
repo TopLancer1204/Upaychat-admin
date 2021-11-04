@@ -26,7 +26,7 @@
                         <h3 class="card-title">Transaction Management</h3>
                     </div>
                     <div class="card-body">
-                        <table class="example1 table table-bordered table-striped">
+                        <table class="example1 table table-bordered table-striped" id="example1">
                             <thead>
                             <tr>
                                 <th>Name</th>
@@ -51,8 +51,8 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{-- <a href="{{route('user-edit',$user->id)}}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i>&nbsp;Edit</a>
-                                        <button class="btn btn-danger btn-xs" onclick="deleteUsers(this,'{{$user->id}}')"><i class="fas fa-trash-alt"></i>&nbsp;Delete</button> --}}
+                                        {{-- <a href="{{route('user-edit',$user->id)}}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i>&nbsp;Edit</a> --}}
+                                        <button class="btn btn-danger btn-xs" onclick="deleteUsers(this,'{{$user->id}}')"><i class="fas fa-trash-alt"></i>&nbsp;Delete</button>
                                         <span id="tbl_action_{{$user->id}}">
                                             @if($user->user_status == 'on')
                                                 <button class="btn btn-success btn-xs" onclick="userStatus(this,'{{$user->id}}','off')"><i class="fas fa-eye-slash"></i>Suspend </button>
