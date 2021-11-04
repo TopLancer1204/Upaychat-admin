@@ -26,7 +26,7 @@
                     <h3 class="card-title">Identity Verification Status</h3>
                 </div>
                 <div class="card-body">
-                    <table class="example1 table table-bordered table-striped" id="identity_list">
+                    <table class="example1 table table-bordered table-striped" id="example1">
                         <thead>
                             <tr>
                                 <th>Avatar</th>
@@ -47,9 +47,9 @@
                                 @endphp
                                 <td onclick="location.href='{{$link}}'"><img src="{{@$item->user->avatar}}" alt="{{@$item->user->name}}" style="width: 50px; height:50px"></td>
                                 <td onclick="location.href='{{$link}}'">{{@$item->user->name}}</td>
-                                <td onclick="location.href='{{$link}}'"><img src="{{@$item->goverment[0]->path}}" alt="" style="width: 50px; height:50px"></td>
-                                <td onclick="location.href='{{$link}}'"><img src="{{@$item->proof[0]->path}}" alt="" style="width: 50px; height:50px"></td>
-                                <td onclick="location.href='{{$link}}'"><img src="{{@$item->id_card[0]->path}}" alt="" style="width: 50px; height:50px"></td>
+                                <td onclick="location.href='{{$link}}'"><img src="{{@$item->goverment[0]->path}}" alt="goverment" style="width: 50px; height:50px"></td>
+                                <td onclick="location.href='{{$link}}'"><img src="{{@$item->proof[0]->path}}" alt="proof" style="width: 50px; height:50px"></td>
+                                <td onclick="location.href='{{$link}}'"><img src="{{@$item->id_card[0]->path}}" alt="id card" style="width: 50px; height:50px"></td>
                                 <td onclick="location.href='{{$link}}'">{{@$item->verify_code}}</td>
                                 <td>
                                     @if ($item->status == 0)
@@ -62,12 +62,10 @@
                                     <button class="btn btn-danger btn-xs">Rejected</button>
                                     @endif
                                 </td>
-                                <td><button class="btn btn-danger btn-xs" onclick="deleteUsers(this, '{{route('identity.destroy', $item)}}')"><i
-                                            class="fas fa-trash-alt"></i>&nbsp;Delete</button></td>
+                                <td><button class="btn btn-danger btn-xs" onclick="deleteUsers(this, '{{route('identity.destroy', $item)}}')"><i class="fas fa-trash-alt"></i>&nbsp;Delete</button></td>
                             </tr>
                             @endforeach
                         </tbody>
-
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -113,7 +111,7 @@
         }).then((result) => {
             if (result.value.status == 'success') {
                 toastr.success(result.value.content, result.value.title);
-                $('#identity_list').deleteRow(list);
+                document.getElementById("example1").deleteRow(list);
             } else {
                 toastr.error(result.value.content, result.value.title);
             }
