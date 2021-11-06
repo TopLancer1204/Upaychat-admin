@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\IDVerification;
+use App\Models\IDVerificationMeta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -47,6 +49,9 @@ class UserController extends Controller
         } elseif (isset($request->user_status)) {
             try {
                 User::where('id', $request->id)->update($request->all());
+                if($request->user_status == "off") {
+                    IDVerification::where('user_id', $request->id)->metadata()->delete();
+                }
                 return response(['status' => 'success', 'title' => 'successful', 'content' => 'User Status Changed']);
             } catch (\Exception $e) {
                 return response(['status' => 'error', 'title' => 'Failed!', 'content' => 'User Status Could Not Change']);

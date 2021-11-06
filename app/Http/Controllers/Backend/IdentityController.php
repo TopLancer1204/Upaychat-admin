@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\IDVerification;
 use App\Models\IDVerificationMeta;
 
@@ -82,6 +83,10 @@ class IdentityController extends Controller
         //
         $status = $request->status;
         $reason = $request->reason;
+        if($status == "2" || $status == 2) {
+            $userid = IDVerification::where('id', $id)->value('user_id');
+            User::where('id', $userid)->update(['user_status' => "on"]);
+        }
         IDVerification::where('id', $id)->update(['status' => $status, 'result' => $reason]);
         return response(['status' => 'success', 'title' => 'Success', 'content' => 'ID Verification status changed to ']);
     }
@@ -99,7 +104,7 @@ class IdentityController extends Controller
             IDVerificationMeta::where('verify_id', $id)->delete();
             return response(['status' => 'success', 'title' => 'Success', 'content' => 'Successfully deleted identity info.']);
         } catch (\Throwable $th) {
-            return response(['status' => 'error', 'title' => 'Error', 'content' => $th->getMessages()]);
+            return response(['status' => 'error', 'title' => 'Error', 'content' => $th->getMessage()]);
         }
     }
 }

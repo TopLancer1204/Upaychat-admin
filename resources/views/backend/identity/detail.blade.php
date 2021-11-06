@@ -219,7 +219,6 @@
                 url: `${id}`,
                 data: {status, reason},
                 success: function (response) {
-                    console.log(response);
                     if (response.status == 'success') {
                         toastr.success(`${response.content} ${txt_status}`, response.title);
                     } else {
@@ -227,7 +226,7 @@
                     }
                     setTimeout(() => {
                         location.reload();
-                    }, 1500);
+                    }, 1000);
                 }
             })
         }

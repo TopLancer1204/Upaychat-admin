@@ -103,6 +103,7 @@
                         },
                         error: function (error) {
                             toastr.error(error.toString(), "Request failed");
+                            reject(error);
                         }
                     });
                 })

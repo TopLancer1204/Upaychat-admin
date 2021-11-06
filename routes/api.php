@@ -27,15 +27,15 @@ Route::post('/slider-list', 'API\SliderController@sliderList');
 
 Route::middleware('auth:api')->post('/user', function (Request $request) {
     $user = $request->user();
-    if($user->user_status == "off") {
-        $response['status'] = "false";
-        $response['message'] = "Your account suspended.";
-        $response['data'] = [];
-    } else {
-        $response['status'] = "true";
-        $response['message'] = "";
-        $response['data'] = $user;
-    }
+    // if($user->user_status == "off") {
+    //     $response['status'] = "false";
+    //     $response['message'] = "Your account suspended.";
+    //     $response['data'] = [];
+    // } else {
+    $response['status'] = "true";
+    $response['message'] = "";
+    $response['data'] = $user;
+    // }
     return $response;
 });
 
