@@ -152,7 +152,7 @@ class TransactionController extends Controller
             if (count($lk)) {
                 $like = 1;
             }
-            $_empty = (Object)['firstname' => "", "lastname" => "", "avatar" => ""];
+            $_empty = (Object)['firstname' => "@", "lastname" => "#", "avatar" => ""];
 
             $username = '';
             switch ($tran->transaction_type) {
