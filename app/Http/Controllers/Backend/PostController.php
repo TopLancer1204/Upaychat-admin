@@ -39,13 +39,14 @@ class PostController extends Controller
 
     function getPosts()
     {
+        $_empty = (Object)['firstname' => "@", "lastname" => "#", "avatar" => ""];
         $allPosts = Transaction::where('status', 1)->where('transaction_type', 'pay')->get();
         $postList = array();
         if (count($allPosts) > 0) {
             foreach ($allPosts as $post) {
 
-                $us = User::find($post->user_id);
-                $tu = User::find($post->touser_id);
+                $us = User::find($post->user_id) ?? $_empty;
+                $tu = User::find($post->touser_id) ?? $_empty;
                 $comments = PostComment::where('tran_id', $post->id)->get();
 
                 $postList[] = array(
@@ -65,11 +66,12 @@ class PostController extends Controller
 
     public function postComments(Request $request)
     {
+        $_empty = (Object)['firstname' => "@", "lastname" => "#", "avatar" => ""];
         $comments = PostComment::where('tran_id', $request->postId)->get();
         $CommentList = array();
 
         foreach ($comments as $post) {
-            $user = User::find($post->user_id);
+            $user = User::find($post->user_id) ?? $_empty;
 
             $CommentList[] = array
             (

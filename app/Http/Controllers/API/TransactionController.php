@@ -140,7 +140,7 @@ class TransactionController extends Controller
                 $comuser = User::find($com->user_id);
                 $comments[] = array(
                     'user_id' => $com->user_id,
-                    'username' => $comuser->username,
+                    'username' => $comuser == null ? "" : $comuser->username,
                     'comment' => $com->comment,
                     'timestamp' => $com->created_at,
                 );
@@ -649,7 +649,7 @@ class TransactionController extends Controller
                 $comuser = User::find($com->user_id);
                 $comments[] = array(
                     'user_id' => $com->user_id,
-                    'username' => $comuser->username,
+                    'username' => $comuser == null ? "" : $comuser->username,
                     'comment' => $com->comment,
                     'timestamp' => $com->created_at,
                 );
