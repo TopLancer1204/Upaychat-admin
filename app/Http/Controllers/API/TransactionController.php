@@ -69,7 +69,8 @@ class TransactionController extends Controller
                 'to_userimage' => $touserImage,
                 'message' => $message,
                 'caption' => $tran->caption,
-                'privacy' => $tran->privacy
+                'privacy' => $tran->privacy,
+                'status' => $tran->status
             );
         }
 
