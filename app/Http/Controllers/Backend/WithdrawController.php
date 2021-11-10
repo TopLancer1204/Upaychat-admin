@@ -11,13 +11,14 @@ use App\Models\Transaction;
 use App\Models\Withdrawal;
 use App\Models\BankDetail;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 
 class WithdrawController extends Controller
 {
     public function getWithdraws()
     {
-        $settings = Withdrawal::all();
+        $settings = Withdrawal::orderby('created_at', 'desc')->get();
         $list = array();
         foreach ($settings as $therequest) {
             $uid = $therequest->user_id;
@@ -52,14 +53,21 @@ class WithdrawController extends Controller
             try {
                 $withdrawal = Withdrawal::where('id', $request->id)->first();
                 if ($withdrawal != null && $withdrawal->status == 0) {
-                    $withdrawal->status = 1;
-                    $withdrawal->save();
-
                     $transactionRequest = Transaction::where('id', $withdrawal->trans_id)->first();
+                    $message = "Your withdraw request for ₦" . number_format($transactionRequest->amount, 2, '.', ',') . " has been accepted on UpayChat.";
+                    $withdrawal->status = 1;
                     $transactionRequest->status = 1;
+                    if($request->accept == false || $request->accept == "false") {
+                        $message = "Your withdraw request for ₦" . number_format($transactionRequest->amount, 2, '.', ',') . " has been rejected on UpayChat.";
+                        $withdrawal->status = 2;
+                        $transactionRequest->status = 2;
+
+                        $balance = Wallet::where('user_id', $withdrawal->user_id)->value('balance') + $withdrawal->amount;
+                        Wallet::where('user_id', $withdrawal->user_id)->update(['balance' => $balance]);
+                    }
+                    $withdrawal->save();
                     $transactionRequest->save();
 
-                    $message = "Your withdraw request for ₦" . number_format($transactionRequest->amount, 2, '.', ',') . " has been accepted on UpayChat.";
                     $user = User::find($withdrawal->user_id);
                     if ($user != null) {
                         Helper::sendEmail($user->email, $message, "Withdraw request ₦" . number_format($transactionRequest->amount, 2, '.', ','));
@@ -75,6 +83,7 @@ class WithdrawController extends Controller
                     return response(['status' => 'error', 'title' => 'Error', 'content' => 'Withdraw requests could not accepted']);
                 }
             } catch (\Exception $e) {
+                dd($e);
                 return response(['status' => 'error', 'title' => 'Error', 'content' => 'Withdraw requests could not accepted']);
             }
         }

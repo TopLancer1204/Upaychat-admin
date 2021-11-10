@@ -51,9 +51,13 @@
                                     <td>
                                         @if($setting['status'] == 0)
                                             <button class="btn btn-success btn-sm"
-                                                    onclick="acceptSettings(this,'{{$setting['id']}}')"><i
+                                                    onclick="acceptSettings(this,'{{$setting['id']}}', true)"><i
                                                     class="fas fa-check"></i>&nbsp;Accept
                                             </button>
+                                            <button class="btn btn-danger btn-sm"
+                                            onclick="acceptSettings(this,'{{$setting['id']}}', false)"><i
+                                            class="fas fa-times"></i>&nbsp;Reject
+                                    </button>
                                         @elseif($setting['status'] == 1) Completed
                                         @else Cancelled
                                         @endif
@@ -96,17 +100,16 @@
 
     //setting delete
     <script>
-        function acceptSettings(r, id) {
-            var list = r.parentNode.parentNode.rowIndex;
+        function acceptSettings(r, id, isAccept) {
             swal({
-                title: 'Are you sure you want to accept it?',
+                title: `Are you sure you want to ${isAccept ? 'accept' : 'reject'} it?`,
                 text: "",
                 type: 'warning',
                 showCancelButton: true,
                 cancelButtonText: 'Canel',
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes,Accept'
+                confirmButtonText: `Yes, ${isAccept ? 'Accept' : 'Reject'}`
             }).then((result) => {
                 if (result.value) {
                     $.ajax
@@ -114,8 +117,8 @@
                         type: "Post",
                         url: '{{route('withdraws')}}',
                         data: {
-                            'id': id,
-                            'accept': 'accept'
+                            id,
+                            accept: isAccept,
                         },
                         beforeSubmit: function () {
                             swal({
@@ -126,7 +129,6 @@
                         },
                         success: function (response) {
                             if (response.status === 'success') {
-                                // document.getElementById('example1').deleteRow(list);
                                 toastr.success(response.content, response.title);
                             } else {
                                 toastr.error(response.content, response.title);
