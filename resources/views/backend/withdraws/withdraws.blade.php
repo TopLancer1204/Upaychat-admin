@@ -133,6 +133,9 @@
                             } else {
                                 toastr.error(response.content, response.title);
                             }
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
                         }
                     })
                 } else {

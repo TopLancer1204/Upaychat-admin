@@ -18,7 +18,7 @@ class WithdrawController extends Controller
 {
     public function getWithdraws()
     {
-        $settings = Withdrawal::orderby('created_at', 'desc')->get();
+        $settings = Withdrawal::orderby('id', 'desc')->get();
         $list = array();
         foreach ($settings as $therequest) {
             $uid = $therequest->user_id;
@@ -50,15 +50,14 @@ class WithdrawController extends Controller
     public function postWithdraws(Request $request)
     {
         if (isset($request->accept)) {
+            $_accept = $request->accept == "true" ? "accepted" : "rejected";
             try {
                 $withdrawal = Withdrawal::where('id', $request->id)->first();
                 if ($withdrawal != null && $withdrawal->status == 0) {
                     $transactionRequest = Transaction::where('id', $withdrawal->trans_id)->first();
-                    $message = "Your withdraw request for ₦" . number_format($transactionRequest->amount, 2, '.', ',') . " has been accepted on UpayChat.";
                     $withdrawal->status = 1;
                     $transactionRequest->status = 1;
-                    if($request->accept == false || $request->accept == "false") {
-                        $message = "Your withdraw request for ₦" . number_format($transactionRequest->amount, 2, '.', ',') . " has been rejected on UpayChat.";
+                    if($_accept == "rejected") {
                         $withdrawal->status = 2;
                         $transactionRequest->status = 2;
 
@@ -67,6 +66,7 @@ class WithdrawController extends Controller
                     }
                     $withdrawal->save();
                     $transactionRequest->save();
+                    $message = "Your withdraw request for ₦" . number_format($transactionRequest->amount, 2, '.', ',') . " has been ".$_accept." on UpayChat.";
 
                     $user = User::find($withdrawal->user_id);
                     if ($user != null) {
@@ -78,13 +78,13 @@ class WithdrawController extends Controller
                             FcmJob::dispatch($user->fcm_token, "Withdraw", $message);
                     }
 
-                    return response(['status' => 'success', 'title' => 'Success', 'content' => 'Withdraw requests accepted']);
+                    return response(['status' => 'success', 'title' => 'Success', 'content' => 'Withdraw requests '.$_accept]);
                 } else {
-                    return response(['status' => 'error', 'title' => 'Error', 'content' => 'Withdraw requests could not accepted']);
+                    return response(['status' => 'error', 'title' => 'Error', 'content' => 'Withdraw requests could not '.$_accept]);
                 }
             } catch (\Exception $e) {
                 dd($e);
-                return response(['status' => 'error', 'title' => 'Error', 'content' => 'Withdraw requests could not accepted']);
+                return response(['status' => 'error', 'title' => 'Error', 'content' => 'Withdraw requests could not '.$_accept]);
             }
         }
     }
