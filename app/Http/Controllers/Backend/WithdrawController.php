@@ -27,7 +27,11 @@ class WithdrawController extends Controller
                 $fullname = $s->firstname . " " . $s->lastname;
 
                 $bnk = BankDetail::firstWhere('user_id', $uid);
-                $bank = array('holdername' => $bnk->account_holder_name, 'bankName' => $bnk->bank, 'accountno' => $bnk->account_no);
+                if($bnk == null) {
+                    $bank = array('holdername' => "#", 'bankName' => "#", 'accountno' => "#");
+                }  else {
+                    $bank = array('holdername' => $bnk->account_holder_name, 'bankName' => $bnk->bank, 'accountno' => $bnk->account_no);
+                }
                 $list[] = array(
                     'id' => $therequest->id,
                     'name' => $fullname,
