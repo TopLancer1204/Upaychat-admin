@@ -76,7 +76,7 @@ class WithdrawController extends Controller
                     if ($user != null) {
                         Helper::sendEmail($user->email, $message, "Withdraw request ₦" . number_format($transactionRequest->amount, 2, '.', ','));
 
-                        SmsJob::dispatch($user->mobile, $message);
+                        SmsJob::dispatch($user->mobile ?? $user->id ?? 0, $message);
 
                         if ($user->fcm_token != null && $user->fcm_token != '')
                             FcmJob::dispatch($user->fcm_token, "Withdraw", $message);

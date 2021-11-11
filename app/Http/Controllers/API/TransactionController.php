@@ -361,7 +361,7 @@ class TransactionController extends Controller
             if ($receiver != null) {
                 Helper::sendEmail($receiver->email, $message, $subject);
 
-                SmsJob::dispatch($receiver->mobile, $message);
+                SmsJob::dispatch($receiver->mobile ?? $receiver->id ?? 0, $message);
 
                 if ($receiver->fcm_token != null && $receiver->fcm_token != '')
                     FcmJob::dispatch($receiver->fcm_token, $user->username, $message);
@@ -432,7 +432,7 @@ class TransactionController extends Controller
                 if ($receiver != null) {
                     Helper::sendEmail($receiver->email, $message, $subject);
 
-                    SmsJob::dispatch($receiver->mobile, $message);
+                    SmsJob::dispatch($receiver->mobile ?? $receiver->id ?? 0, $message);
 
                     if ($receiver->fcm_token != null && $receiver->fcm_token != '')
                         FcmJob::dispatch($receiver->fcm_token, $user->username, $message);
@@ -497,7 +497,7 @@ class TransactionController extends Controller
             if ($receiver != null) {
                 Helper::sendEmail($receiver->email, $message, $subject);
 
-                SmsJob::dispatch($receiver->mobile, $message);
+                SmsJob::dispatch($receiver->mobile ?? $receiver->id ?? 0, $message);
 
                 if ($receiver->fcm_token != null && $receiver->fcm_token != '')
                     FcmJob::dispatch($receiver->fcm_token, $user->username, $message);
