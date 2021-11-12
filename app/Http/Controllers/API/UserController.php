@@ -187,7 +187,7 @@ class UserController extends Controller
             return response()->json($response);
         }
 
-        $input = $request->merge(['email_verified_at' => now(), 'user_status' => 'off'])->all();
+        $input = $request->merge(['email_verified_at' => now()])->all();
         $input['password'] = bcrypt($input['password']);
 
         $user = User::create($input);
