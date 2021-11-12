@@ -213,7 +213,7 @@ class UserController extends Controller
         foreach ($pendings as $pending) {
             $pending->touser_id = $uid;
 
-            $sender = User::find($pending->user_id);
+            $sender = User::find($pending->user_id) ?? (object)['firstname' => "#", "lastname" => "" ];
 
             if (strtolower($pending->transaction_type) == 'pay') {
                 $pending->status = 1;
@@ -332,7 +332,44 @@ class UserController extends Controller
         $user = Auth::user();
 
         try {
-            if ($request->has('mobile')) $user->mobile = $data['mobile'];
+            if ($request->has('mobile')) {
+                if($user->mobile == null || $user->mobile == "") {
+                    $wallet = Wallet::where('user_id', $user->id);
+                    if($wallet == null || $wallet->count() <= 0) {
+                        $wallet = Wallet::create([ 'user_id' => $user->id, 'balance' => '0.00' ]);
+                    } else {
+                        $wallet = $wallet->first();
+                    }
+                    $pendings = Transaction::where([['touser_id', $data['mobile']], ['status', 4]])->get();
+            
+                    foreach ($pendings as $pending) {
+                        $pending->touser_id = $user->id;
+            
+                        $sender = User::find($pending->user_id) ?? (object)['firstname' => "#", "lastname" => "" ];
+            
+                        if (strtolower($pending->transaction_type) == 'pay') {
+                            $pending->status = 1;
+                            // update this user's wallet
+                            $wallet->balance += $pending->amount;
+            
+                            $message = $sender->firstname . " " . $sender->lastname . " paid you ₦" . number_format($pending->amount, 2, '.', ',');
+                        } elseif (strtolower($request->transaction_type) == 'request') {
+                            $pending->status = 0;
+                            $message = $sender->firstname . " " . $sender->lastname . " requested ₦" . number_format($pending->amount, 2, '.', ',') . " from you";
+                        }
+                        $pending->save();
+            
+                        ////////////////////// notification for receiver ///////////////
+                        $Noti = new Notification;
+                        $Noti->post_id = $pending->id;
+                        $Noti->user_id = $pending->touser_id;
+                        $Noti->notification = $message;
+                        $Noti->save();
+                    }
+                    $wallet->save();
+                }
+                $user->mobile = $data['mobile'];
+            }
             if ($request->has('firstname')) $user->firstname = $data['firstname'];
             if ($request->has('lastname')) $user->lastname = $data['lastname'];
             if ($request->has('birthday')) $user->birthday = $data['birthday'];
