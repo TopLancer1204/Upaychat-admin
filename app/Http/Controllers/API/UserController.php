@@ -280,12 +280,26 @@ class UserController extends Controller
             $response['data'] = [];
             return response()->json($response);
         }
-        $login_type = filter_var($request->input('login_user'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $login_user =$request->input('login_user');
+        $user = User::where('email', $login_user)->orwhere('mobile', $login_user)->orwhere('username', $login_user)->first();
+        if($request->failedCount >= 5) {
+            $user->locked = 1;
+            $user->save();
+        }
 
-        if (Auth::attempt([$login_type => request('login_user'), 'password' => request('password')]) ||
+        if($user->locked == 1) {
+            $response['status'] = "false";
+            $response['message'] = 'Your account is locked, Please change your password.';
+            $response['data'] = [];
+            return response()->json($response);
+        }
+
+        $login_type = filter_var($login_user, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        if (Auth::attempt([$login_type => $login_user, 'password' => request('password')]) ||
             ($login_type == 'username' &&
-                (Auth::attempt(['mobile' => request('login_user'), 'password' => request('password')]) ||
-                    Auth::attempt(['mobile' => '+' . request('login_user'), 'password' => request('password')])))) {
+                (Auth::attempt(['mobile' => $login_user, 'password' => request('password')]) ||
+                    Auth::attempt(['mobile' => '+' . $login_user, 'password' => request('password')])))) {
             $user = Auth::user();
             // if($user->user_status == "off") {
             //     $response['status'] = "false";
@@ -417,6 +431,7 @@ class UserController extends Controller
             $newpass = Hash::make($request->new_password);
 
             $user->password = $newpass;
+            $user->locked = 0;
             $user->save();
 
             $response['status'] = "true";
