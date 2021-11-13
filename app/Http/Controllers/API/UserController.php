@@ -209,7 +209,7 @@ class UserController extends Controller
         $pendings = Transaction::where([['touser_id', $request->email], ['status', 4]])
             // ->orWhere([['touser_id', $request->mobile], ['status', 4]])
             ->get();
-
+        $message = "";
         foreach ($pendings as $pending) {
             $pending->touser_id = $uid;
 
@@ -221,7 +221,7 @@ class UserController extends Controller
                 $wallet->balance += $pending->amount;
 
                 $message = $sender->firstname . " " . $sender->lastname . " paid you ₦" . number_format($pending->amount, 2, '.', ',');
-            } elseif (strtolower($request->transaction_type) == 'request') {
+            } elseif (strtolower($pending->transaction_type) == 'request') {
                 $pending->status = 0;
                 $message = $sender->firstname . " " . $sender->lastname . " requested ₦" . number_format($pending->amount, 2, '.', ',') . " from you";
             }
@@ -353,7 +353,7 @@ class UserController extends Controller
                             $wallet->balance += $pending->amount;
             
                             $message = $sender->firstname . " " . $sender->lastname . " paid you ₦" . number_format($pending->amount, 2, '.', ',');
-                        } elseif (strtolower($request->transaction_type) == 'request') {
+                        } elseif (strtolower($pending->transaction_type) == 'request') {
                             $pending->status = 0;
                             $message = $sender->firstname . " " . $sender->lastname . " requested ₦" . number_format($pending->amount, 2, '.', ',') . " from you";
                         }
