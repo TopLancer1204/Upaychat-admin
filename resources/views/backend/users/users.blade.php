@@ -33,6 +33,7 @@
                                 <th>Email</th>
                                 <th>Mobile no</th>
                                 <th>Status</th>
+                                <th>Login Failed</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -48,6 +49,13 @@
                                             <button class="btn btn-success btn-xs">Active</button>
                                         @else
                                             <button class="btn btn-danger btn-xs">Suspended</button>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($user->locked < 5)
+                                            <span rel="tooltip" title="{{$user->locked}} times failed to login." class="btn btn-success btn-xs">Unlocked</span>
+                                        @else
+                                            <span rel="tooltip" title="Account locked" class="btn btn-danger btn-xs">Locked</span>
                                         @endif
                                     </td>
                                     <td>
