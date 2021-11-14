@@ -281,13 +281,8 @@ class UserController extends Controller
             return response()->json($response);
         }
         $login_user =$request->input('login_user');
-        $user = User::where('email', $login_user)->orwhere('mobile', $login_user)->orwhere('username', $login_user)->first();
-        if($request->failedCount >= 5) {
-            $user->locked = 1;
-            $user->save();
-        }
-
-        if($user->locked == 1) {
+        $current_user = User::where('email', $login_user)->orwhere('mobile', $login_user)->orwhere('username', $login_user)->first();
+        if($current_user != null && $current_user->locked >= 5) {
             $response['status'] = "false";
             $response['message'] = 'Your account is locked, Please change your password.';
             $response['data'] = [];
@@ -307,6 +302,7 @@ class UserController extends Controller
             //     $response['token'] = "";
             //     $response['data'] = [];
             // } else {
+            $user->locked = 0;
             $user->fcm_token = $request->fcm_token;
             $user->save();
             $userdata = array(
@@ -327,6 +323,10 @@ class UserController extends Controller
             $response['data'] = $userdata;
             // }
     } else {
+            if($current_user != null) {
+                $current_user->locked = $current_user->locked + 1;
+                $current_user->save();
+            }
             $response['status'] = "false";
             $response['message'] = "Invalid username or password.";
             $response['token'] = "";
