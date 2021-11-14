@@ -470,7 +470,7 @@ class TransactionController extends Controller
 
         $transactionRequest = Transaction::find($request->requestId);
 
-        if ($transactionRequest->status != 0) {
+        if ($transactionRequest->status != 0 && $transactionRequest->status != 4) {
             $response['status'] = "false";
             $response['message'] = $transactionRequest->status == 1 ? "This transaction already completed" : "This transaction already canceled";
             $response['data'] = [];
