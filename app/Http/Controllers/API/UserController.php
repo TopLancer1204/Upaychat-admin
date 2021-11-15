@@ -33,6 +33,7 @@ class UserController extends Controller
         $user = User::firstWhere('mobile', $mobile);
         if ($user != null) {
             $user->password = Hash::make($request->password);
+            $user->locked = 0;
             $user->save();
             ////////////////////////////////////
             $response['status'] = "true";

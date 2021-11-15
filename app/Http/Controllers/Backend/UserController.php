@@ -48,9 +48,15 @@ class UserController extends Controller
             }
         } elseif (isset($request->user_status)) {
             try {
-                User::where('id', $request->id)->update($request->all());
-                if($request->user_status == "off") {
-                    IDVerification::where('user_id', $request->id)->metadata()->delete();
+                if($request->user_status == "lock"){
+                    User::where('id', $request->id)->update(['locked' => 5]);
+                } else if($request->user_status == "unlock"){
+                    User::where('id', $request->id)->update(['locked' => 0]);
+                } else {
+                    User::where('id', $request->id)->update($request->all());
+                    if($request->user_status == "off") {
+                        IDVerification::where('user_id', $request->id)->metadata()->delete();
+                    }
                 }
                 return response(['status' => 'success', 'title' => 'successful', 'content' => 'User Status Changed']);
             } catch (\Exception $e) {
