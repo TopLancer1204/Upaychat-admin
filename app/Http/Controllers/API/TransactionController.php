@@ -273,20 +273,20 @@ class TransactionController extends Controller
             $pending->status = 4;
             $pending->save();
 
-            // update this users wallet
-            $payerwalet = Wallet::firstWhere('user_id', $userid);
-            $curBal = $payerwalet->balance;
-            if ($curBal < $request->amount) {
-                $response['status'] = "false";
-                $response['message'] = "Insufficient balance in wallet";
-                $response['data'] = [];
-                return response()->json($response);
-            }
-            $newBalance = $curBal - $request->amount;
-            $payerwalet->balance = $newBalance;
-            $payerwalet->save();
-
             if ($request->transaction_type == 'pay') {
+                // update this users wallet
+                $payerwalet = Wallet::firstWhere('user_id', $userid);
+                $curBal = $payerwalet->balance;
+                if ($curBal < $request->amount) {
+                    $response['status'] = "false";
+                    $response['message'] = "Insufficient balance in wallet";
+                    $response['data'] = [];
+                    return response()->json($response);
+                }
+                $newBalance = $curBal - $request->amount;
+                $payerwalet->balance = $newBalance;
+                $payerwalet->save();
+
                 $subject = $user->firstname . " " . $user->lastname . " paid ₦" . number_format($request->amount, 2, '.', ',');
                 $message = $user->firstname . " " . $user->lastname . " paid you ₦" . number_format($request->amount, 2, '.', ',') . " on UpayChat. Go to upaychat.com to Download App and pick up money.";
             } else {
