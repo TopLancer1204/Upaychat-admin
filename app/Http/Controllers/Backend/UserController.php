@@ -7,6 +7,10 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\IDVerification;
 use App\Models\IDVerificationMeta;
+use App\Models\Withdrawal;
+use App\Models\Wallet;
+use App\Models\Transaction;
+use App\Models\PendingSms;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -39,9 +43,21 @@ class UserController extends Controller
     {
         if (isset($request->delete)) {
             try {
-                $users = User::where('id', $request->id)->first();
-                File::delete(public_path($users->avatar));
-                User::where('id', $request->id)->delete();
+                if($request->id == 0) {
+                    $users = User::where('id', '!=', 1)->get();
+                    foreach ($users as $key => $value) {
+                        File::delete(public_path($value->avatar));
+                    }
+                    User::where('id', '!=', 1)->delete();
+                    Withdrawal::where('id', '>', 0)->delete();
+                    Wallet::where('user_id', '!=', 1)->delete();
+                    Transaction::where('id', '>', 0)->delete();
+                    PendingSms::where('id', '>', 0)->delete();
+                } else {
+                    $users = User::where('id', $request->id)->first();
+                    File::delete(public_path($users->avatar));
+                    User::where('id', $request->id)->delete();                    
+                }
                 return response(['status' => 'success', 'title' => 'successful', 'content' => 'User Deleted']);
             } catch (\Exception $e) {
                 return response(['status' => 'error', 'title' => 'Başarısız', 'content' => 'User Could Not Delete']);

@@ -24,6 +24,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Transaction Management</h3>
+                    <button class="btn btn-danger btn-sm" style="float: right" onclick="deleteUsers(this,0)">Delete all</button>
                 </div>
                 <div class="card-body">
                     <table class="example1 table table-bordered table-striped" id="example1">
@@ -91,9 +92,9 @@
 //user delete
 <script>
     function deleteUsers(r, id) {
-            var list = r.parentNode.parentNode.rowIndex;
+            var list = id == 0 ? null : r.parentNode.parentNode.rowIndex;
             swal({
-                title: 'Are you sure you want to delete it?',
+                title: `Are you sure you want to delete ${id == 0 ? "All users" : "this user"}?`,
                 text: "It will not be recycled when you delete it!",
                 type: 'warning',
                 showCancelButton: true,
@@ -120,8 +121,14 @@
                         },
                         success: function (response) {
                             if (response.status == 'success') {
-                                document.getElementById('example1').deleteRow(list);
                                 toastr.success(response.content, response.title);
+                                if(list) {
+                                    document.getElementById('example1').deleteRow(list);
+                                } else {
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1000);
+                                }
                             } else {
                                 toastr.error(response.content, response.title);
                             }
