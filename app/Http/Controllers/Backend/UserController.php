@@ -53,6 +53,8 @@ class UserController extends Controller
                     Wallet::where('user_id', '!=', 1)->delete();
                     Transaction::where('id', '>', 0)->delete();
                     PendingSms::where('id', '>', 0)->delete();
+                    IDVerification::where('id', '>', 0)->delete();
+                    IDVerificationMeta::where('id', '>', 0)->delete();
                 } else {
                     $users = User::where('id', $request->id)->first();
                     File::delete(public_path($users->avatar));
