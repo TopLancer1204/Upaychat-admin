@@ -46,7 +46,7 @@
                                 <!--<td>{{$user->roleName->rol_name}}</td>-->
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->mobile}}</td>
-                                <td>{{date('d M Y', strtotime($user->birthday))}}</td>
+                                <td>{{($user->birthday == null || $user->birthday == "") ? '' : date('d M Y', strtotime($user->birthday))}}</td>
                                 <td id="tbl_status_{{$user->id}}">
                                     @if($user->user_status == 'on')
                                     <button class="btn btn-success btn-xs">Active</button>
