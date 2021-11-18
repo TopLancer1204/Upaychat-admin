@@ -52,10 +52,14 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $extralist = array();
-        if (isset($request['roll']) && $request['roll'] != '')
-            $userlist = User::select('id', 'avatar', 'firstname', 'lastname', 'username', 'email', 'mobile')
-                ->where([/*['roll_id', 3], */ ['id', '!=', $user->id], ['roll', $request['roll']]])->get();
-        else {
+        if (isset($request['roll']) && $request['roll'] != '') {
+            $model = User::select('id', 'avatar', 'firstname', 'lastname', 'username', 'email', 'mobile');
+            if($request['roll'] == "all") {
+                $userlist = $model->where('id', '!=', $user->id)->get();
+            } else {
+                $userlist = $model->where([/*['roll_id', 3], */ ['id', '!=', $user->id], ['roll', $request['roll']]])->get();
+            }
+        } else {
             $ids = Transaction::select("touser_id as id")
                 ->where('user_id', $user->id)
                 ->where('touser_id', '!=', $user->id);
