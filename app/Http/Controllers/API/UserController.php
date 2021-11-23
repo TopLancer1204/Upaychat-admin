@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use App\Jobs\SmsJob;
 
 class UserController extends Controller
 {
@@ -161,7 +162,12 @@ class UserController extends Controller
             $response['message'] = $errmess;
         } else {
             $code = Helper::generateRandomNumber();
-            Helper::sendSMS($request->mobile, "Your UpayChat Code is " . $code.". It expires in 5 minutes.");
+            $istwilio = $request->twilio;
+            $type = 1;
+            if($istwilio == true || $istwilio == "true") {
+                $istwilio = 0;
+            }
+            SmsJob::dispatch($request->mobile, "Your UpayChat Code is " . $code.". It expires in 5 minutes.", $istwilio);
             $response['status'] = "true";
             $response['message'] = $code;
         }

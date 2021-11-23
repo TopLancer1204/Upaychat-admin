@@ -15,16 +15,18 @@ class SmsJob implements ShouldQueue
 
     public $to;
     public $message;
+    public $type;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($to, $message)
+    public function __construct($to, $message, $type) //type-> 0: twilio, 1: multitexter
     {
         $this->to = $to;
         $this->message = $message;
+        $this->type = $type;
     }
 
     /**
@@ -34,6 +36,6 @@ class SmsJob implements ShouldQueue
      */
     public function handle()
     {
-        Helper::sendSMS($this->to, $this->message);
+        Helper::sendSMS($this->to, $this->message, $this->type);
     }
 }

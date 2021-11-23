@@ -43,8 +43,7 @@ Route::get('/sendEmail', function () {
 });
 
 Route::get('/sendSms', function () {
-//    \App\Jobs\SmsJob::dispatch('+2348130192404', now());
-    Helper::sendSMS('+2348130192404', now());
+   \App\Jobs\SmsJob::dispatch('+2348130192403', now(), 1);
     return now();
 });
 

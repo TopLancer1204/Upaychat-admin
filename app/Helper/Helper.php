@@ -4,7 +4,7 @@ namespace App\Helper;
 
 use App\Models\PendingSms;
 use Illuminate\Support\Facades\Mail;
-
+use Twilio\Rest\Client;
 class Helper
 {
     public static function generateRandomNumber($length = 6)
@@ -31,12 +31,52 @@ class Helper
         }
     }
 
-    public static function sendSMS($mobile, $msg)
+    public static function sendSMS($mobile, $msg, $type) //type-> 0:twilio, 1: multitexter
     {
         PendingSms::create([
             'mobile' => $mobile,
             'message' => $msg,
         ]);
+        try {
+            if($type == 0) {
+                Helper::sendSMSTwilio($mobile, $msg);
+            } else {
+                Helper::sendSMSMultiTexter($mobile, $msg);
+            }
+            return ['success' => true, 'message' => "Sent success"];
+        } catch (\Throwable $th) {
+            throw $th;
+            return ['success' => false, 'message' => $th->getMessage()];
+        }
+    }
+    public static function sendSMSMultiTexter($recipients, $msg) {
+        $email = env('MULTITEXTER_EMAIL');
+        $password = env('MULTITEXTER_PASSWORD');
+        $sender_name = env('MULTITEXTER_SENDER');
+      
+        $data = array("email" => $email, "password" => $password, "message"=>$msg, "sender_name"=>$sender_name, "recipients"=>$recipients, "forcednd"=>1);
+        $data_string = json_encode($data);
+        $ch = curl_init('https://app.multitexter.com/v2/app/sms');
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: ' . strlen($data_string)));
+        $result = curl_exec($ch);
+        $res_array = json_decode($result);
+        if($res_array->status == 1) {
+            return;
+        }
+        throw new Exception($res_array->msg, 1);
+    }
+    public static function sendSMSTwilio($phone, $msg) {
+        $account_sid = env("TWILIO_SID");
+        $auth_token = env("TWILIO_TOKEN");
+        $twilio_number = env("TWILIO_FROM");
+        $client = new Client($account_sid, $auth_token);
+        $client->messages->create($phone, [
+            'from' => $twilio_number, 
+            'body' => $msg]
+        );
     }
 
     public static function sendPushNotification($notification_id, $title, $message, $image = null, $icon = null)
