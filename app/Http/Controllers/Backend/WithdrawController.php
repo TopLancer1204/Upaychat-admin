@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend;
 use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Jobs\FcmJob;
-use App\Jobs\SmsJob;
 use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\Withdrawal;
@@ -76,7 +75,7 @@ class WithdrawController extends Controller
                     if ($user != null) {
                         Helper::sendEmail($user->email, $message, "Withdraw request ₦" . number_format($transactionRequest->amount, 2, '.', ','));
 
-                        SmsJob::dispatch($user->mobile ?? $user->id ?? 0, $message, 1);
+                        Helper::sendSMS($user->mobile ?? $user->id ?? 0, $message, 1);
 
                         if ($user->fcm_token != null && $user->fcm_token != '')
                             FcmJob::dispatch($user->fcm_token, "Withdraw", $message);

@@ -45,7 +45,6 @@ class Helper
             }
             return ['success' => true, 'message' => "Sent success"];
         } catch (\Throwable $th) {
-            throw $th;
             return ['success' => false, 'message' => $th->getMessage()];
         }
     }
