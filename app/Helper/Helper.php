@@ -65,7 +65,7 @@ class Helper
         if($res_array->status == 1) {
             return;
         }
-        throw new Exception($res_array->msg, 1);
+        throw new \Exception($res_array->msg, 1);
     }
     public static function sendSMSTwilio($phone, $msg) {
         $account_sid = env("TWILIO_SID");
