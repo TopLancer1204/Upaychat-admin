@@ -16,12 +16,19 @@ class UserSeeder extends Seeder
     {
         User::insert([
             'avatar' => '/uploads/users/ali-karabay-2020-05-24-232607.jpg',
-            'name' => 'Ali Karabay',
-            'email' => 'admin@admin.com',
-            'password' => Hash::make('password'),
+            'name' => 'Consumer Support',
+            "firstname" => "Consumer",
+            "lastname" => "Support",
+            "birthday" => "1992-03-13",
+            "username" => "Admin",
+            "mobile" => "+23412345678",
+            'email' => 'support@upaychat.com',
+            'password' => Hash::make('12345678'),
             'roll_id' => '1',
-            'roll' => 'admin',
+            'roll' => 'support',
             'user_status' => 'on',
+            "fcm_token" => "",
+            "locked" => 0,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
