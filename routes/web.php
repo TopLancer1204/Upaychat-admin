@@ -43,7 +43,7 @@ Route::get('/sendEmail', function () {
 });
 
 Route::get('/sendSms', function () {
-    Helper::sendSMS('+2348130192403', now(), 1);
+    Helper::sendSMS('+12092370450', now());
     return now();
 });
 

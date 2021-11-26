@@ -161,12 +161,8 @@ class UserController extends Controller
             $response['message'] = $errmess;
         } else {
             $code = Helper::generateRandomNumber();
-            $istwilio = $request->twilio;
-            $type = 1;
-            if($istwilio === true || $istwilio === "true") {
-                $type = 0;
-            }
-            $res = Helper::sendSMS($request->mobile, "Your UpayChat Code is " . $code.". It expires in 5 minutes.", $type);
+           
+            $res = Helper::sendSMS($request->mobile, "Your UpayChat Code is " . $code.". It expires in 5 minutes.");
             if($res['success']) {
                 $response['status'] = "true";
                 $response['message'] = $code;

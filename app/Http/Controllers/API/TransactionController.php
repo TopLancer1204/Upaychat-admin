@@ -296,7 +296,7 @@ class TransactionController extends Controller
             if ($result != false)
                 Helper::sendEmail($request->user, $message, $subject);
             else
-                Helper::sendSMS($request->user, $message, 1);
+                Helper::sendSMS($request->user, $message);
 
             $response['status'] = "true";
             $response['message'] = "Transaction success.";
@@ -360,7 +360,7 @@ class TransactionController extends Controller
             if ($receiver != null) {
                 Helper::sendEmail($receiver->email, $message, $subject);
 
-                Helper::sendSMS($receiver->mobile ?? $receiver->id ?? 0, $message, 1);
+                Helper::sendSMS($receiver->mobile ?? $receiver->id ?? 0, $message);
 
                 if ($receiver->fcm_token != null && $receiver->fcm_token != '')
                     FcmJob::dispatch($receiver->fcm_token, $user->username, $message);
@@ -431,7 +431,7 @@ class TransactionController extends Controller
                 if ($receiver != null) {
                     Helper::sendEmail($receiver->email, $message, $subject);
 
-                    Helper::sendSMS($receiver->mobile ?? $receiver->id ?? 0, $message, 1);
+                    Helper::sendSMS($receiver->mobile ?? $receiver->id ?? 0, $message);
 
                     if ($receiver->fcm_token != null && $receiver->fcm_token != '')
                         FcmJob::dispatch($receiver->fcm_token, $user->username, $message);
@@ -496,7 +496,7 @@ class TransactionController extends Controller
             if ($receiver != null) {
                 Helper::sendEmail($receiver->email, $message, $subject);
 
-                Helper::sendSMS($receiver->mobile ?? $receiver->id ?? 0, $message, 1);
+                Helper::sendSMS($receiver->mobile ?? $receiver->id ?? 0, $message);
 
                 if ($receiver->fcm_token != null && $receiver->fcm_token != '')
                     FcmJob::dispatch($receiver->fcm_token, $user->username, $message);
@@ -524,7 +524,7 @@ class TransactionController extends Controller
             if ($result != false) {
                 Helper::sendEmail($transactionRequest->touser_id, $message, $subject);
             } else {
-                Helper::sendSMS($transactionRequest->touser_id, $message, 1);
+                Helper::sendSMS($transactionRequest->touser_id, $message);
             }
         } else if ($transactionRequest->transaction_type == 'request') {
             $subject = $user->firstname . " " . $user->lastname . " cancelled his request";
@@ -533,7 +533,7 @@ class TransactionController extends Controller
             if ($result != false) {
                 Helper::sendEmail($transactionRequest->touser_id, $message, $subject);
             } else {
-                Helper::sendSMS($transactionRequest->touser_id, $message, 1);
+                Helper::sendSMS($transactionRequest->touser_id, $message);
             }
         }
 
