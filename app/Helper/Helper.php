@@ -48,24 +48,26 @@ class Helper
             return ['success' => false, 'message' => $th->getMessage()];
         }
     }
-    public static function sendSMSMultiTexter($recipients, $msg) {
-        $email = env('MULTITEXTER_EMAIL');
-        $password = env('MULTITEXTER_PASSWORD');
+    public static function sendSMSMultiTexter($phone, $msg) {
+        $token = env('MULTITEXTER_API_KEY');
         $sender_name = env('MULTITEXTER_SENDER');
-      
-        $data = array("email" => $email, "password" => $password, "message"=>$msg, "sender_name"=>$sender_name, "recipients"=>$recipients, "forcednd"=>1);
+        $recipients = preg_replace( '/[^0-9]/', '', $phone);
+
+        $data = array("message"=>$msg, "sender_name"=>$sender_name, "recipients"=>$recipients, "forcednd"=>1);
         $data_string = json_encode($data);
-        $ch = curl_init('https://app.multitexter.com/v2/app/sms');
+        error_log($data_string);
+        $ch = curl_init('https://app.multitexter.com/v2/app/sendsms');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: ' . strlen($data_string)));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Authorization: Bearer '.$token));
         $result = curl_exec($ch);
         $res_array = json_decode($result);
         if($res_array->status == 1) {
             return;
         }
-        throw new \Exception($res_array->msg, 1);
+        Helper::sendSMSTwilio($phone, $msg);
+        // throw new \Exception($res_array->msg, 1);
     }
     public static function sendSMSTwilio($phone, $msg) {
         $account_sid = env("TWILIO_SID");
@@ -74,7 +76,8 @@ class Helper
         $client = new Client($account_sid, $auth_token);
         $client->messages->create($phone, [
             'from' => $twilio_number, 
-            'body' => $msg]
+            'body' => $msg
+            ]
         );
     }
 
