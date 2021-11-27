@@ -19,6 +19,9 @@ class Helper
 
     public static function sendEmail($email, $msg, $subject)
     {
+        if($msg != null) {
+            $msg = str_replace('₦', 'NGN', $msg);
+        }
         try {
             $data = array('msg' => $msg);
 
@@ -33,6 +36,9 @@ class Helper
 
     public static function sendSMS($mobile, $msg)
     {
+        if($msg != null) {
+            $msg = str_replace('₦', 'NGN', $msg);
+        }
         PendingSms::create([
             'mobile' => $mobile,
             'message' => $msg,
