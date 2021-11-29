@@ -19,6 +19,9 @@ class Helper
 
     public static function sendEmail($email, $msg, $subject)
     {
+        if($subject != null) {
+            $subject = str_replace('₦', 'NGN', $subject);
+        }
         if($msg != null) {
             $msg = str_replace('₦', 'NGN', $msg);
         }
