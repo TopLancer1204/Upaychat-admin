@@ -74,17 +74,23 @@ class CardDetailController extends Controller
     {
         $user = Auth::user();
         $userid = $user->id;
-
-        $card = CardDetail::create($request->merge(['user_id' => $userid])->all());
-
-        if ($card) {
-            $response['status'] = "true";
-            $response['message'] = "Your card details saved successfully.";
+        $exists = CardDetail::where('card_number', $request->card_number)->count();
+        if($exists > 0) {
+            $response['status'] = "false";
+            $response['message'] = "This card already added.";
             $response['data'] = $card;
         } else {
-            $response['status'] = "false";
-            $response['message'] = "Error while adding card.";
-            $response['data'] = '';
+            $card = CardDetail::create($request->merge(['user_id' => $userid])->all());
+
+            if ($card) {
+                $response['status'] = "true";
+                $response['message'] = "Your card details saved successfully.";
+                $response['data'] = $card;
+            } else {
+                $response['status'] = "false";
+                $response['message'] = "Error while adding card.";
+                $response['data'] = '';
+            }
         }
         return response()->json($response);
     }
