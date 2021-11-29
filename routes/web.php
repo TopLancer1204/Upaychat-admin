@@ -38,7 +38,7 @@ Route::get('/optimize', function () {
 });
 
 Route::get('/sendEmail', function () {
-    Helper::sendEmail('smartdevpro001@gmail.com', now() . "\n" . now(), "Test email");
+    Helper::sendEmail('upmanager200@gmail.com', now() . "\n" . now(), "Test email");
     return now();
 });
 
