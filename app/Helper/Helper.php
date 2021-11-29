@@ -32,7 +32,6 @@ class Helper
                 ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
             });
         } catch (\Throwable $th) {
-            throw $th;
         }
     }
 
