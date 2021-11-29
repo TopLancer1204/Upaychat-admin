@@ -31,7 +31,8 @@ class Helper
                 $message->subject($subject);
             });
         } catch (\Throwable $th) {
-            throw $th;
+            dd($th->getMessage());
+            // throw $th;
         }
     }
 
