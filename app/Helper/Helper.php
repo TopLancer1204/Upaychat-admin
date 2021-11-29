@@ -29,10 +29,7 @@ class Helper
                 $message
                 ->to($email)
                 ->subject($subject)
-                ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
-                ->embedData([
-                    'send_at'    => $send_at->getTimestamp(),
-                ], 'sendgrid/x-smtpapi');
+                ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
             });
         } catch (\Throwable $th) {
             throw $th;
