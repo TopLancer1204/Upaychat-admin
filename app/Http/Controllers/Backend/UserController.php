@@ -56,6 +56,9 @@ class UserController extends Controller
                     IDVerification::where('id', '>', 0)->delete();
                     IDVerificationMeta::where('id', '>', 0)->delete();
                 } else {
+                    if($request->id <= 1) {
+                        return response(['status' => 'success', 'title' => 'successful', 'content' => 'Can\'t delete admin']);
+                    }
                     $users = User::where('id', $request->id)->first();
                     File::delete(public_path($users->avatar));
                     User::where('id', $request->id)->delete();                    
@@ -66,6 +69,9 @@ class UserController extends Controller
             }
         } elseif (isset($request->user_status)) {
             try {
+                if($request->id <= 1) {
+                    return response(['status' => 'success', 'title' => 'successful', 'content' => 'Can\'t update admin status']);
+                }
                 if($request->user_status == "lock"){
                     User::where('id', $request->id)->update(['locked' => 5]);
                 } else if($request->user_status == "unlock"){

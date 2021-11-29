@@ -63,6 +63,7 @@
                                         @endif
                                 </td>
                                 <td>
+                                    @if ($user->id != 1)
                                     {{-- <a href="{{route('user-edit',$user->id)}}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i>&nbsp;Edit</a> --}}
                                     <button class="btn btn-danger btn-xs" onclick="deleteUsers(this,'{{$user->id}}')"><i class="fas fa-trash-alt"></i>&nbsp;Delete</button>
                                     <span id="tbl_action_{{$user->id}}">
@@ -72,6 +73,7 @@
                                         <button class="btn btn-success btn-xs" onclick="userStatus(this,'{{$user->id}}','on')"><i class="fas fa-eye"></i>Activate</button>
                                         @endif
                                     </span>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
