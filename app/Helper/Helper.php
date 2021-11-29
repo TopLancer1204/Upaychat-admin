@@ -31,6 +31,7 @@ class Helper
                 $message->subject($subject);
             });
         } catch (\Throwable $th) {
+            throw $th;
         }
     }
 
