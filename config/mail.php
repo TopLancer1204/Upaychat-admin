@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'sendgrid'),
 
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +43,9 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
         ],
-
+        'sendgrid' => [
+            'transport' => 'sendgrid',
+        ],
         'ses' => [
             'transport' => 'ses',
         ],
