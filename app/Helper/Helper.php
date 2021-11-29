@@ -26,13 +26,16 @@ class Helper
             $data = array('msg' => $msg);
 
             Mail::send('backend.transactions.mail', $data, function ($message) use ($email, $subject) {
-                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-                $message->to($email);
-                $message->subject($subject);
+                $message
+                ->to($email)
+                ->subject($subject)
+                ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
+                ->embedData([
+                    'send_at'    => $send_at->getTimestamp(),
+                ], 'sendgrid/x-smtpapi');
             });
         } catch (\Throwable $th) {
-            dd($th->getMessage());
-            // throw $th;
+            throw $th;
         }
     }
 
