@@ -343,7 +343,7 @@ class TransactionController extends Controller
             } elseif (strtolower($request->transaction_type) == 'request') {
                 $transaction->status = 0;
                 $subject = $user->firstname . " " . $user->lastname . " requested ₦" . number_format($request->amount, 2, '.', ',');
-                $message = $user->firstname . " " . $user->lastname . " requested ₦" . number_format($request->amount, 2, '.', ',') . " from you";
+                $message = $user->firstname . " " . $user->lastname . " requested ₦" . number_format($request->amount, 2, '.', ',') . " from you on Upaychat";
             }
             $transaction->save();
 
@@ -527,13 +527,12 @@ class TransactionController extends Controller
                 Helper::sendSMS($transactionRequest->touser_id, $message);
             }
         } else if ($transactionRequest->transaction_type == 'request') {
-            $subject = $user->firstname . " " . $user->lastname . " cancelled his request";
-            $message = $user->firstname . " " . $user->lastname . " cancelled the ₦" . number_format($transactionRequest->amount, 2, '.', ',') . " sent on " . now()->format('d/m/Y') . " on UpayChat.";
-            $result = filter_var($transactionRequest->touser_id, FILTER_VALIDATE_EMAIL);
-            if ($result != false) {
-                Helper::sendEmail($transactionRequest->touser_id, $message, $subject);
+            $subject = "You cancelled the request";
+            $message = "You cancelled the ₦" . number_format($transactionRequest->amount, 2, '.', ',') . " sent on " . now()->format('d/m/Y') . " on UpayChat.";
+            if($user->email){
+                Helper::sendEmail($user->email, $message, $subject);
             } else {
-                Helper::sendSMS($transactionRequest->touser_id, $message);
+                Helper::sendSMS($user->phone, $message);
             }
         }
 
