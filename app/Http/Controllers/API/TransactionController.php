@@ -527,7 +527,7 @@ class TransactionController extends Controller
                 Helper::sendSMS($transactionRequest->touser_id, $message);
             }
         } else if ($transactionRequest->transaction_type == 'request') {
-            $subject = "You cancelled the request";
+            $subject = "UpayChat money request cancelled";
             $message = "You cancelled the ₦" . number_format($transactionRequest->amount, 2, '.', ',') . " requested on " . now()->format('d/m/Y') . " on UpayChat.";
             if($user->email){
                 Helper::sendEmail($user->email, $message, $subject);
@@ -535,7 +535,7 @@ class TransactionController extends Controller
                 Helper::sendSMS($user->phone, $message);
             }
 
-            $subject = $user->firstname . " " . $user->lastname . " cancelled your payment";
+            $subject = "UpayChat money request cancelled";
             $message = $user->firstname . " " . $user->lastname . " cancelled the ₦" . number_format($transactionRequest->amount, 2, '.', ',') . " requested on " . now()->format('d/m/Y') . " on UpayChat.";
             
             $result = filter_var($transactionRequest->touser_id, FILTER_VALIDATE_EMAIL);
