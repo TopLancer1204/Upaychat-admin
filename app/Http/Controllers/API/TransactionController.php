@@ -343,7 +343,7 @@ class TransactionController extends Controller
             } elseif (strtolower($request->transaction_type) == 'request') {
                 $transaction->status = 0;
                 $subject = $user->firstname . " " . $user->lastname . " requested ₦" . number_format($request->amount, 2, '.', ',');
-                $message = $user->firstname . " " . $user->lastname . " requested ₦" . number_format($request->amount, 2, '.', ',') . " from you on Upaychat";
+                $message = $user->firstname . " " . $user->lastname . " requested ₦" . number_format($request->amount, 2, '.', ',') . " from you";
             }
             $transaction->save();
 
