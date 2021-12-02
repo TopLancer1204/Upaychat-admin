@@ -78,7 +78,7 @@ class CardDetailController extends Controller
         if($exists > 0) {
             $response['status'] = "false";
             $response['message'] = "This card already added.";
-            $response['data'] = $card;
+            $response['data'] = '';
         } else {
             $card = CardDetail::create($request->merge(['user_id' => $userid])->all());
 
