@@ -77,7 +77,7 @@ class CardDetailController extends Controller
         $exists = CardDetail::where('card_number', $request->card_number)->count();
         if($exists > 0) {
             $response['status'] = "false";
-            $response['message'] = "This card already added.";
+            $response['message'] = "Card is already on file.";
             $response['data'] = '';
         } else {
             $card = CardDetail::create($request->merge(['user_id' => $userid])->all());
