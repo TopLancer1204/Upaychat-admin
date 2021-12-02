@@ -541,8 +541,8 @@ class TransactionController extends Controller
             $result = filter_var($transactionRequest->touser_id, FILTER_VALIDATE_EMAIL);
             if ($result != false) {
                 Helper::sendEmail($transactionRequest->touser_id, $message, $subject);
-            } else {
-                Helper::sendSMS($transactionRequest->touser_id, $message);
+            // } else {
+                // Helper::sendSMS($transactionRequest->touser_id, $message);
             }
         }
 
