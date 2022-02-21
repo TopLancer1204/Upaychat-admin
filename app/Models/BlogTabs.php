@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Blog extends Model
+class BlogTabs extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -13,17 +13,9 @@ class Blog extends Model
      */
     protected $fillable = [
         'id',
-        'blog_title',
-        'blog_description',
-        'blog_tags',
-        'blog_type',
-        'blog_content',
-        'blog_image',
-        'blog_author',
-        'blog_slug',
-        'blog_categoryId',
-        'blog_status',
-        'updated_at',
+        'blog_id',
+        'title',
+        'description',
     ];
 
 

@@ -50,7 +50,9 @@ Route::post('/pendingsms', function () {
     \App\Models\PendingSms::query()->delete();
     return response()->json($response);
 });
-
+Route::Post('/getJobs', 'API\JobController@getJobs');    
+Route::Post('/getBlogs','API\BlogController@getBlogs');
+Route::Post('/getBlog','API\BlogController@getBlog');
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/changepassword', 'API\UserController@changepassword');
@@ -94,6 +96,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/withdrawrequest', 'API\TransactionController@addwithdrawrequest');
     Route::post('/addlike', 'API\TransactionController@addlike');
     // **********************************************************************************************************
+    
+    
+    // **********************************************************************************************************
+
     Route::post('/faq', 'API\PageController@faq');
 
     Route::post('/currenttime', function () {
