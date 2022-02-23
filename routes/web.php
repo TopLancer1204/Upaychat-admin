@@ -132,6 +132,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix("blogs")->middleware('Blog')->group(function () {
         Route::get('/', 'Backend\BlogController@getBlogs')->name("blogs");
+        Route::post('/', 'Backend\BlogController@postBlogs')->name("blogs");
         Route::get('/blog-add', 'Backend\BlogController@getBlogAdd')->name("blog-add");
         Route::post('/blog-add', 'Backend\BlogController@postBlogAdd')->name("blog-add");
         Route::get('/blog-edit/{settingId}', 'Backend\BlogController@getBlogEdit')->name("blog-edit");
