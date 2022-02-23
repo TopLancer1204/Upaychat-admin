@@ -7,11 +7,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Bloglar</h1>
+                        <h1 class="m-0 text-dark">Blogs</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                            <li class="breadcrumb-item"><a href="#">Home Page</a></li>
                             <li class="breadcrumb-item active">Blog</li>
                         </ol>
                     </div>
@@ -23,16 +23,16 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Blog Listesi</h3>
+                        <h3 class="card-title">Blog List</h3>
                     </div>
                     <div class="card-body">
                         <table class="example1 table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Blog Başlık</th>
-                                <th>Yazar</th>
-                                <th>Yayınlanma Tarihi</th>
-                                <th>İşlemler</th>
+                                <th>Blog Title</th>
+                                <th>Writer</th>
+                                <th>Release Date</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -43,20 +43,20 @@
                                     <td>{{$blog->created_at}}</td>
                                     <td>
                                         <a href="{{route('blog-edit',$blog->id)}}" class="btn btn-primary"><i
-                                                class="fas fa-edit"></i>&nbsp;Düzenle</a>
+                                                class="fas fa-edit"></i>&nbsp;Edit</a>
                                         <button class="btn btn-danger" onclick="deleteBlog(this,'{{$blog->id}}')"><i
-                                                class="fas fa-trash-alt"></i>&nbsp;Sil
+                                                class="fas fa-trash-alt"></i>&nbsp;Delete
                                         </button>
 
                                         @if($blog->blog_status == 'on')
                                             <button class="btn btn-success"
                                                     onclick="blogsStatus(this,'{{$blog->id}}','off')"><i
-                                                    class="fas fa-eye-slash"></i>Pasif
+                                                    class="fas fa-eye-slash"></i>Deactive
                                             </button>
                                         @else
                                             <button class="btn btn-success"
                                                     onclick="blogsStatus(this,'{{$blog->id}}','on')"><i
-                                                    class="fas fa-eye"></i>Aktif
+                                                    class="fas fa-eye"></i>Active
                                             </button>
                                         @endif
                                     </td>
@@ -99,14 +99,14 @@
         function deleteBlog(r, id) {
             var list = r.parentNode.parentNode.rowIndex;
             swal({
-                title: 'Silmek istediğinize emin misiniz?',
-                text: "Sildiğinizde geri dönüşümü olmayacaktır!",
+                title: 'Are you going to Delete?',
+                text: "Now deleting selected Category!",
                 type: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'İptal',
+                cancelButtonText: 'Cancel',
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Evet, Sil!'
+                confirmButtonText: 'Sure, Delete'
             }).then((result) => {
                 if (result.value) {
                     $.ajax
@@ -120,7 +120,7 @@
                         beforeSubmit: function () {
                             swal({
                                 title: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i> <span class="sr-only">Loading...</span>',
-                                text: 'Siliniyor lütfen bekleyiniz...',
+                                text: 'Now Deleting, Please wait...',
                                 showConfirmButton: false
                             })
                         },

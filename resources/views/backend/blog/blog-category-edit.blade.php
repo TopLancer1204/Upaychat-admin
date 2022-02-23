@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Blog Kategori Düzenle</h1>
+                        <h1 class="m-0 text-dark">Blog Category Edit</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
-                            <li class="breadcrumb-item active">Blog Kategori</li>
+                            <li class="breadcrumb-item"><a href="#">Home Page</li>
+                            <li class="breadcrumb-item active">Blog Category</li>
                         </ol>
                     </div>
                 </div>
@@ -26,13 +26,13 @@
                         <div class="col-md-12">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Blog Kategori</h3>
+                                    <h3 class="card-title">Blog Category</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label>Kategoriler</label>
+                                        <label>Categories</label>
                                         <select class="form-control select2" style="width: 100%;" name="up_categoryId">
-                                            <option value="0" selected="selected">Üst Kategori</option>
+                                            <option value="0" selected="selected">Top Category</option>
                                             @foreach($categories as $categoryy)
                                                 <option
                                                     value="{{$categoryy->id}}">{{$categoryy->category_name}}</option>
@@ -41,20 +41,20 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Kategori Adı</label>
+                                        <label for="exampleInputEmail1">Category Name</label>
                                         <input type="text" name="category_name" value="{{$category->category_name}}"
-                                               class="form-control" placeholder="Kategori Adı Yazınız">
+                                               class="form-control" placeholder="Category Name">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="">Kategori Görünürlüğü</label><br>
+                                        <label for="">Category Visibility<br>
                                         <input type="checkbox" name="category_status"
                                                {{$category->category_status == 'on' ? 'checked' : ' ' }} data-bootstrap-switch>
                                     </div>
                                 </div>
 
                                 <div class="card-footer">
-                                    <button id="categoryButton" type="button" class="btn btn-primary">Kaydet</button>
+                                    <button id="categoryButton" type="button" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                         </div>

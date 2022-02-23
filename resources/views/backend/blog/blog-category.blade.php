@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Blog Kategori</h1>
+                        <h1 class="m-0 text-dark">Blog Category</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
-                            <li class="breadcrumb-item active">Blog Kategori</li>
+                            <li class="breadcrumb-item"><a href="#">Home Page</a></li>
+                            <li class="breadcrumb-item active">Blog Category</li>
                         </ol>
                     </div>
                 </div>
@@ -23,15 +23,15 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Blog Kategori Listesi</h3>
+                        <h3 class="card-title">Blog Categorys List</h3>
                     </div>
                     <div class="card-body">
                         <table class="example1 table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Kategori Adı</th>
-                                <th>Oluşturulma Tarihi</th>
-                                <th>İşlemler</th>
+                                <th>Category Name</th>
+                                <th>Creation Date</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -41,21 +41,21 @@
                                     <td>{{$category->created_at}}</td>
                                     <td>
                                         <a href="{{route('blog-category-edit',$category->id)}}" class="btn btn-primary"><i
-                                                class="fas fa-edit"></i>&nbsp;Düzenle</a>
+                                                class="fas fa-edit"></i>&nbsp;Edit</a>
                                         <button class="btn btn-danger"
                                                 onclick="deleteCategory(this,'{{$category->id}}')"><i
-                                                class="fas fa-trash-alt"></i>&nbsp;Sil
+                                                class="fas fa-trash-alt"></i>&nbsp;Delete
                                         </button>
 
                                         @if($category->category_status == 'on')
                                             <button class="btn btn-success"
                                                     onclick="categoryStatus(this,'{{$category->id}}','off')"><i
-                                                    class="fas fa-eye-slash"></i>Pasif
+                                                    class="fas fa-eye-slash"></i>Disable
                                             </button>
                                         @else
                                             <button class="btn btn-success"
                                                     onclick="categoryStatus(this,'{{$category->id}}','on')"><i
-                                                    class="fas fa-eye"></i>Aktif
+                                                    class="fas fa-eye"></i>Active
                                             </button>
                                         @endif
                                     </td>
@@ -66,21 +66,21 @@
                                         <td>{{$downCategory->created_at}}</td>
                                         <td>
                                             <a href="{{route('blog-category-edit',$downCategory->id)}}"
-                                               class="btn btn-primary"><i class="fas fa-edit"></i>&nbsp;Düzenle</a>
+                                               class="btn btn-primary"><i class="fas fa-edit"></i>&nbsp;Edit</a>
                                             <button class="btn btn-danger"
                                                     onclick="deleteCategory(this,'{{$downCategory->id}}')"><i
-                                                    class="fas fa-trash-alt"></i>&nbsp;Sil
+                                                    class="fas fa-trash-alt"></i>&nbsp;Delete
                                             </button>
 
                                             @if($downCategory->category_status == 'on')
                                                 <button class="btn btn-success"
                                                         onclick="categoryStatus(this,'{{$downCategory->id}}','off')"><i
-                                                        class="fas fa-eye-slash"></i>Pasif
+                                                        class="fas fa-eye-slash"></i>Disable
                                                 </button>
                                             @else
                                                 <button class="btn btn-success"
                                                         onclick="categoryStatus(this,'{{$downCategory->id}}','on')"><i
-                                                        class="fas fa-eye"></i>Aktif
+                                                        class="fas fa-eye"></i>Active
                                                 </button>
                                             @endif
                                         </td>
@@ -108,14 +108,14 @@
         function deleteCategory(r, id) {
             var list = r.parentNode.parentNode.rowIndex;
             swal({
-                title: 'Silmek istediğinize emin misiniz?',
-                text: "Sildiğinizde geri dönüşümü olmayacaktır!",
+                title: 'Are you going to Delete?',
+                text: "Now deleting selected Category!",
                 type: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'İptal',
+                cancelButtonText: 'Cancel',
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Evet, Sil!'
+                confirmButtonText: 'Sure, Delete'
             }).then((result) => {
                 if (result.value) {
                     $.ajax
@@ -129,7 +129,7 @@
                         beforeSubmit: function () {
                             swal({
                                 title: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i> <span class="sr-only">Loading...</span>',
-                                text: 'Siliniyor lütfen bekleyiniz...',
+                                text: 'Now Deleting, Please wait...',
                                 showConfirmButton: false
                             })
                         },

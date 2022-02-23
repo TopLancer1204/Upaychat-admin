@@ -7,11 +7,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Blog Düzenle</h1>
+                        <h1 class="m-0 text-dark">Edit Blog</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                            <li class="breadcrumb-item"><a href="#">Home Page</a></li>
                             <li class="breadcrumb-item active">Blog</li>
                         </ol>
                     </div>
@@ -30,16 +30,16 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Başlık</label>
+                                        <label for="exampleInputEmail1">Title</label>
                                         <input type="text" name="blog_title" value="{{$blog->blog_title}}"
-                                               class="form-control" placeholder="Başlık Yazınız">
+                                               class="form-control" placeholder="Your Title">
                                     </div>
                                     <div class="form-group">
-                                        <label>Kategori</label>
+                                        <label>Category</label>
                                         <select class="form-control select2" style="width: 100%;"
                                                 name="blog_categoryId">
                                             <option value="{{$blog->blog_categoryId}}" selected></option>
-                                            <option value="0">Diğer</option>
+                                            <option value="0">Other</option>
                                             @foreach($categories as $category)
                                                 <option value="{{$category->id}}">{{$category->category_name}}</option>
                                             @endforeach
@@ -47,30 +47,30 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Kısa Açıklama</label>
+                                        <label for="exampleInputEmail1">Short Description</label>
                                         <input type="text" name="blog_description" value="{{$blog->blog_description}}"
-                                               class="form-control" placeholder="Kısa Açıklama Yazınız">
+                                               class="form-control" placeholder="Short Description">
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Etiket</label>
+                                        <label for="exampleInputEmail1">Ticket</label>
                                         <input type="text" name="blog_tags" value="{{$blog->blog_tags}}"
-                                               class="form-control" placeholder="Etiket">
+                                               class="form-control" placeholder="Ticket">
                                     </div>
                                     <div class="form-group">
-                                        <label>İçerik</label>
+                                        <label>Contents</label>
                                         <textarea name="blog_content" id="editor">{!! $blog->blog_content !!}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="card-footer">
-                                    <button id="blogsButton" type="button" class="btn btn-primary">Kaydet</button>
+                                    <button id="blogsButton" type="button" class="btn btn-primary">Publish</button>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Blog Resim</h3>
+                                    <h3 class="card-title">Blog Picture</h3>
                                 </div>
                                 <br>
                                 <img id="coverImageShow" src="{{$blog->blog_image}}" width="100%" height="165px">
@@ -89,7 +89,7 @@
                             </div>
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Blog Görünürlüğü</h3>
+                                    <h3 class="card-title">Blog Visibility</h3>
                                 </div>
                                 <br>
                                 <div class="card-body">
