@@ -68,7 +68,7 @@ class BlogController extends Controller
             Blog::create($request->all());
             return response(['status' => 'success', 'title' => 'Başarılı', 'content' => 'Blog Eklendi']);
         } catch (\Exception $e) {
-            return response(['status' => 'error', 'title' => 'Başarısız', 'content' => 'Blog Eklenemedi']);
+            return response(['status' => $e, 'title' => 'Başarısız', 'content' => 'Blog Eklenemedi']);
         }
     }
 

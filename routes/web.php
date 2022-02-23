@@ -128,4 +128,20 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/', 'Backend\ReportController@searchreport')->name("searchreport");
         Route::post('/getuser', 'Backend\ReportController@getuser')->name("getuser");
     });
+
+    Route::prefix("blogs")->middleware('Blog')->group(function () {
+        Route::get('/', 'Backend\BlogController@getBlogs')->name("blogs");
+        Route::get('/blog-add', 'Backend\BlogController@getBlogAdd')->name("blog-add");
+        Route::post('/blog-add', 'Backend\BlogController@postBlogAdd')->name("blog-add");
+        Route::get('/blog-edit/{settingId}', 'Backend\BlogController@getBlogEdit')->name("blog-edit");
+        Route::post('/blog-edit/{settingId}', 'Backend\BlogController@postBlogEdit')->name("blog-edit");
+        Route::get('/blog-category', 'Backend\BlogController@getBlogCategory')->name("blog-category");
+        Route::post('/blog-category', 'Backend\BlogController@postBlogCategory')->name("blog-category");
+        Route::get('/blog-category-add', 'Backend\BlogController@getBlogCategoryAdd')->name("blog-category-add");
+        Route::post('/blog-category-add', 'Backend\BlogController@postBlogCategoryAdd')->name("blog-category-add");
+        Route::get('/blog-category-edit/{settingId}', 'Backend\BlogController@getBlogCategoryEdit')->name("blog-category-edit");
+        Route::post('/blog-category-edit/{settingId}', 'Backend\BlogController@postBlogCategoryEdit')->name("blog-category-edit");
+
+        Route::post('/getuser', 'Backend\ReportController@getuser')->name("getuser");
+    });
 });

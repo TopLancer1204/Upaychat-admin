@@ -32,6 +32,6 @@ class Blog extends Model
      */
     public function userName()
     {
-        return $this->hasOne('App\User', 'id', 'blog_author');
+        return $this->hasOne('App\Models\User', 'id', 'blog_author');
     }
 }
