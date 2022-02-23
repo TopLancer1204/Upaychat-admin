@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/linkstorage', function () {
     Artisan::call('storage:link');
     return '<h1>Linked</h1>';
@@ -59,7 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/password', 'Backend\ProfileController@getAdminEditPass')->name("password");
     Route::post('/savepassword', 'Backend\ProfileController@savepassword')->name("savepassword");
-	Route::resource('identity', 'Backend\IdentityController');
+    Route::resource('identity', 'Backend\IdentityController');
 
     Route::prefix("faq")->middleware('Admin')->group(function () {
         Route::get('/', 'Backend\FaqController@index')->name("faq");
@@ -144,4 +145,11 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::post('/getuser', 'Backend\ReportController@getuser')->name("getuser");
     });
+
+
+    Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
+        ->name('ckfinder_connector');
+
+    Route::any('/ckfinder/browser', '\CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
+        ->name('ckfinder_browser');
 });
