@@ -60,31 +60,24 @@ class BlogController extends Controller
     {
         // $user = Auth::user();
 
-        $blogList = BlogTabs::where("blog_id", $request->blog_id)->get();
-        // $url = env('APP_URL', 'http://localhost/')+$image;
-        $blog = Blog::where("id", $request->blog_id)->first()->get();
-        $image = $blog[0]->blog_image;
-        $image = env('APP_URL', 'http://localhost:8000') . '/' . $image;
-        $blist = array();
-        array_push($blist, array(
-            'id' => $blog[0]->id,
-            'blog_title' => $blog[0]->blog_title,
-            'blog_image' => $image,
-        ));
-        if (count($blogList) < 1)
-            $response['message'] = 'You have not added any blog details';
-        else {
-            foreach ($blogList as $blog) {
-                array_push($blist, array(
-                    'id' => $blog->id,
-                    'blog_title' => $blog->title,
-                    'blog_description' => $blog->description,
-                ));
-            }
+        try {
+            $ban = Blog::where("id", $request->blog_id)->first();
+
+            $bank = array(
+                'id' => $ban->id,
+                'blog_title' => $ban->blog_title,
+                'blog_content' => $ban->blog_content,
+            );
+
+            $response['status'] = "true";
             $response['message'] = 'Success';
+            $response['data'] = $bank;
+            return response()->json($response);
+        } catch (\Exception $e) {
+            $response['status'] = "false";
+            $response['message'] = $e->getMessage();
+            $response['data'] = '';
+            return response()->json($response);
         }
-        $response['data'] = $blist;
-        $response['status'] = "true";
-        return response()->json($response);
     }
 }
