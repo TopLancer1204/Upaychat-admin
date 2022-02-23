@@ -60,7 +60,7 @@
                         </li>
 
 
-                        <li class="nav-item">
+                        <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}}">
                             <a href="{{route('users')}}" class="nav-link {{ request()->is('users') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>User Management</p>
@@ -68,14 +68,14 @@
                         </li>
 
 
-                        <li class="nav-item">
+                        <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}}">
                             <a href="{{route('posts')}}" class="nav-link {{ request()->is('posts') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-images"></i>
                                 <p>Post Management</p>
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}}">
                             <a href="{{route('identity.index')}}" class="nav-link {{ request()->is('identity*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-id-card"></i>
                                 <p>Identity Management</p>
@@ -97,13 +97,13 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}}">
                             <a href="{{route('pages')}}" class="nav-link {{ request()->is('pages') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Content Management</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}}">
                             <a href="{{route('faq')}}" class="nav-link {{ request()->is('faq') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>FAQ Management</p>
@@ -140,7 +140,7 @@
 
 
                         <li
-                            class="nav-item has-treeview {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}} {{ request()->is('blogs','blogs/blog-add','blogs/blog-edit/*') ? 'menu-open' : '' }}">
+                            class="nav-item has-treeview {{\Illuminate\Support\Facades\Auth::user()->roll_id == 2 ? ' ' : 'd-none'}} {{ request()->is('blogs','blogs/blog-add','blogs/blog-edit/*') ? 'menu-open' : '' }}">
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-images"></i>
                                 <p>

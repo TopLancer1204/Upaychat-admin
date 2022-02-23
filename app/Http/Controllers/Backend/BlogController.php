@@ -41,16 +41,16 @@ class BlogController extends Controller
                 $blogs =  Blog::where('id',$request->id)->first();
                 File::delete(public_path($blogs->blog_image));
                 Blog::where('id', $request->id)->delete();
-                return response(['status' => 'success', 'title' => 'Başarılı', 'content' => 'Blog Silindi']);
+                return response(['status' => 'success', 'title' => 'Success', 'content' => 'Blog Deleted successfully']);
             } catch (\Exception $e) {
-                return response(['status' => 'error', 'title' => 'Başarısız', 'content' => 'Blog Silinemedi']);
+                return response(['status' => 'error', 'title' => 'Failed', 'content' => 'Blog Deletion failed']);
             }
         } elseif (isset($request->blog_status)) {
             try {
                 Blog::where('id', $request->id)->update($request->all());
-                return response(['status' => 'success', 'title' => 'Başarılı', 'content' => 'Blog Durumu Değiştirildi']);
+                return response(['status' => 'success', 'title' => 'Success', 'content' => 'Blog Edition Success']);
             } catch (\Exception $e) {
-                return response(['status' => 'error', 'title' => 'Başarısız', 'content' => 'Blog Durumu Değiştirilemedi']);
+                return response(['status' => 'error', 'title' => 'Failed', 'content' => 'Blog Edition Failed']);
             }
         }
     }
@@ -66,9 +66,9 @@ class BlogController extends Controller
             $request->merge(['blog_author' => Auth::user()->id]);
             $request->merge(['blog_slug' => $slug]);
             Blog::create($request->all());
-            return response(['status' => 'success', 'title' => 'Başarılı', 'content' => 'Blog Eklendi']);
+            return response(['status' => 'success', 'title' => 'Success', 'content' => 'Blog Added']);
         } catch (\Exception $e) {
-            return response(['status' => $e, 'title' => 'Başarısız', 'content' => 'Blog Eklenemedi']);
+            return response(['status' => $e, 'title' => 'Failed', 'content' => 'Blog Addition failed. Please enter all fields.']);
         }
     }
 
@@ -95,7 +95,7 @@ class BlogController extends Controller
                 'blog_status' => $request->blog_status == 'on' ? 'on' : 'off',
             ]);
 
-            return response(['status' => 'success', 'title' => 'Başarılı', 'content' => 'Blog Güncellendi ']);
+            return response(['status' => 'success', 'title' => 'Success', 'content' => 'Blog Updated ']);
         } catch (\Exception $e) {
             echo $e;
             //return response(['status' => 'error', 'title' => 'Başarısız', 'content' => 'Blog Güncellenemedi']);
@@ -127,16 +127,16 @@ class BlogController extends Controller
         if (isset($request->delete)) {
             try {
                 Category::where('id', $request->id)->delete();
-                return response(['status' => 'success', 'title' => 'Başarılı', 'content' => 'Kategori Silindi']);
+                return response(['status' => 'success', 'title' => 'Success', 'content' => 'Category Deleted']);
             } catch (\Exception $e) {
-                return response(['status' => 'error', 'title' => 'Başarısız', 'content' => 'Kategori Silinemedi']);
+                return response(['status' => 'error', 'title' => 'Failed', 'content' => 'Category Delete failed']);
             }
         } elseif (isset($request->category_status)) {
             try {
                 Category::where('id', $request->id)->update($request->all());
-                return response(['status' => 'success', 'title' => 'Başarılı', 'content' => 'Kategori Durumu Değiştirildi']);
+                return response(['status' => 'success', 'title' => 'Success', 'content' => 'Category Edited Successfully']);
             } catch (\Exception $e) {
-                return response(['status' => 'error', 'title' => 'Başarısız', 'content' => 'Kategori Durumu Değiştirilemedi']);
+                return response(['status' => 'error', 'title' => 'Failed', 'content' => 'Category Edition failed']);
             }
         }
     }
@@ -146,10 +146,11 @@ class BlogController extends Controller
         try {
             $slug = Str::slug($request->category_name, '-');
             $request->merge(['category_slug' => $slug]);
+            $request->merge(['up_categoryId'=> 0]);
             Category::create($request->all());
-            return response(['status' => 'success', 'title' => 'Başarılı', 'content' => 'Menü Eklendi']);
+            return response(['status' => 'success', 'title' => 'Success', 'content' => 'Category Added.']);
         } catch (\Exception $e) {
-            return response(['status' => 'error', 'title' => 'Başarısız', 'content' => 'Menü Eklenemedi']);
+            return response(['status' => 'error', 'title' => 'Failed', 'content' => 'Addtion Failed']);
         }
     }
 
@@ -160,9 +161,9 @@ class BlogController extends Controller
             $request->merge(['category_slug' => $slug]);
             $request->merge(['category_status' => $request->category_status == 'on' ? 'on' : 'off']);
             Category::where('id', $categoryId)->update($request->all());
-            return response(['status' => 'success', 'title' => 'Başarılı', 'content' => 'Kategori Güncellendi']);
+            return response(['status' => 'success', 'title' => 'Success', 'content' => 'Category Updated']);
         } catch (\Exception $e) {
-            return response(['status' => 'error', 'title' => 'Başarısız', 'content' => 'Kategori Güncellenemedi']);
+            return response(['status' => 'error', 'title' => 'Failed', 'content' => 'Category Update failed']);
         }
     }
 

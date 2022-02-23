@@ -29,16 +29,7 @@
                                     <h3 class="card-title">Blog Category</h3>
                                 </div>
                                 <div class="card-body">
-                                    <div class="form-group">
-                                        <label>Categories</label>
-                                        <select class="form-control select2" style="width: 100%;" name="up_categoryId">
-                                            <option value="0" selected="selected">Top Category</option>
-                                            @foreach($categories as $categoryy)
-                                                <option
-                                                    value="{{$categoryy->id}}">{{$categoryy->category_name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Category Name</label>

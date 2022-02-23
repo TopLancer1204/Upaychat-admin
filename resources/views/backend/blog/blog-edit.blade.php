@@ -51,11 +51,7 @@
                                         <input type="text" name="blog_description" value="{{$blog->blog_description}}"
                                                class="form-control" placeholder="Short Description">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Ticket</label>
-                                        <input type="text" name="blog_tags" value="{{$blog->blog_tags}}"
-                                               class="form-control" placeholder="Ticket">
-                                    </div>
+                                   
                                     <div class="form-group">
                                         <label>Contents</label>
                                         <textarea name="blog_content" id="editor">{!! $blog->blog_content !!}</textarea>

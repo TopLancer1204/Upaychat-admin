@@ -28,7 +28,7 @@ class CreateBlogsTable extends Migration
             $table->id();
             $table->string('blog_title', 255);
             $table->text('blog_description');
-            $table->string('blog_tags', 255);
+            $table->string('blog_tags', 255)->nullable();
             $table->string('blog_type', 255);
             $table->longText('blog_content');
             $table->string('blog_image', 255)->nullable();
