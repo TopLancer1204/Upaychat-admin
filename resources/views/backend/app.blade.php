@@ -146,42 +146,42 @@
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
+
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('blogs')}}" class="nav-link {{ request()->is('blogs') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>All Blogs</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('blog-add')}}" class="nav-link {{ request()->is('blogs/blog-add') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Blog</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{route('blog-category')}}" class="nav-link {{ request()->is('blogs/blog-category') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Blog Categories</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{route('blog-category-add')}}" class="nav-link {{ request()->is('blogs/blog-category-add') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Category</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 2 ? ' ' : 'd-none'}}">
                             <a href="{{route('jobs')}}" class="nav-link {{ request()->is('faq') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Job Management</p>
                             </a>
                         </li>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{route('blogs')}}" class="nav-link {{ request()->is('blogs') ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>All Blogs</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('blog-add')}}" class="nav-link {{ request()->is('blogs/blog-add') ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Add Blog</p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{route('blog-category')}}" class="nav-link {{ request()->is('blogs/blog-category') ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Blog Categories</p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{route('blog-category-add')}}" class="nav-link {{ request()->is('blogs/blog-category-add') ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Add Category</p>
-                                </a>
-                            </li>
-                        </ul>
-                        </li>
-
                         <li class="nav-item has-treeview {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}} {{ request()->is('sliders','sliders/slider-add','sliders/slider-edit/*') ? 'menu-open' : '' }}">
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-images"></i>

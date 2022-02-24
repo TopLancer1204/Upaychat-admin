@@ -71,14 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/', 'Backend\FaqController@postPages')->name("faq");
     });
 
-    Route::prefix("jobs")->middleware('Admin')->group(function () {
-        Route::get('/', 'Backend\JobController@index')->name("jobs");
-        Route::get('/job-add', 'Backend\JobController@add')->name("job-add");
-        Route::post('/job-add', 'Backend\JobController@savejob')->name("job-add");
-        Route::get('/job-edit/{faqId}', 'Backend\JobController@getJobEdit')->name("job-edit");
-        Route::post('/job-edit/{faqId}', 'Backend\JobController@postJobEdit')->name("job-edit");
-        Route::post('/', 'Backend\FaqController@postPages')->name("job");
-    });
+
 
     Route::prefix("pages")->middleware('Admin')->group(function () {
         Route::get('/', 'Backend\PageController@getPages')->name("pages");
@@ -156,6 +149,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/getuser', 'Backend\ReportController@getuser')->name("getuser");
     });
 
+    Route::prefix("jobs")->middleware('Blog')->group(function () {
+        Route::get('/', 'Backend\JobController@index')->name("jobs");
+        Route::get('/job-add', 'Backend\JobController@add')->name("job-add");
+        Route::post('/job-add', 'Backend\JobController@savejob')->name("job-add");
+        Route::get('/job-edit/{faqId}', 'Backend\JobController@getJobEdit')->name("job-edit");
+        Route::post('/job-edit/{faqId}', 'Backend\JobController@postJobEdit')->name("job-edit");
+        Route::post('/', 'Backend\FaqController@postPages')->name("job");
+    });
 
     Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
         ->name('ckfinder_connector');
