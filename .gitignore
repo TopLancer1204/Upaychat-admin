@@ -6,7 +6,6 @@
 vendor/
 storage/
 tests/
-routes/
 *.lock
 *lock.json
 
