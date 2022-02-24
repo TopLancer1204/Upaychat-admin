@@ -53,5 +53,6 @@ Thumbs.db
 *.wmv
 
 public/uploads
+public/userfiles
 .env
 server.php
