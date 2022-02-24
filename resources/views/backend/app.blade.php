@@ -146,7 +146,7 @@
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
-                        <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}}">
+                        <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 2 ? ' ' : 'd-none'}}">
                             <a href="{{route('jobs')}}" class="nav-link {{ request()->is('faq') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Job Management</p>
