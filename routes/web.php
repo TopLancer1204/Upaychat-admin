@@ -62,17 +62,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/savepassword', 'Backend\ProfileController@savepassword')->name("savepassword");
     Route::resource('identity', 'Backend\IdentityController');
 
-    Route::prefix("faq")->middleware('Admin')->group(function () {
-        Route::get('/', 'Backend\FaqController@index')->name("faq");
-        Route::get('/faq-add', 'Backend\FaqController@add')->name("faq-add");
-        Route::post('/faq-add', 'Backend\FaqController@savefaq')->name("faq-add");
-        Route::get('/faq-edit/{faqId}', 'Backend\FaqController@getFaqEdit')->name("faq-edit");
-        Route::post('/faq-edit/{faqId}', 'Backend\FaqController@postFaqEdit')->name("faq-edit");
-        Route::post('/', 'Backend\FaqController@postPages')->name("faq");
-    });
-
-
-
     Route::prefix("pages")->middleware('Admin')->group(function () {
         Route::get('/', 'Backend\PageController@getPages')->name("pages");
         Route::get('/page-add', 'Backend\PageController@getPagesAdd')->name("page-add");
@@ -156,6 +145,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/job-edit/{faqId}', 'Backend\JobController@getJobEdit')->name("job-edit");
         Route::post('/job-edit/{faqId}', 'Backend\JobController@postJobEdit')->name("job-edit");
         Route::post('/', 'Backend\FaqController@postPages')->name("job");
+    });
+
+    Route::prefix("faq")->middleware('Blog')->group(function () {
+        Route::get('/', 'Backend\FaqController@index')->name("faq");
+        Route::get('/faq-add', 'Backend\FaqController@add')->name("faq-add");
+        Route::post('/faq-add', 'Backend\FaqController@savefaq')->name("faq-add");
+        Route::get('/faq-edit/{faqId}', 'Backend\FaqController@getFaqEdit')->name("faq-edit");
+        Route::post('/faq-edit/{faqId}', 'Backend\FaqController@postFaqEdit')->name("faq-edit");
+        Route::post('/', 'Backend\FaqController@postPages')->name("faq");
     });
 
     Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
