@@ -15,13 +15,13 @@ class Jobs extends Migration
     {
         //
         Schema::create('jobs', function (Blueprint $table) {
-            $table->string('id')->index();
+            $table->integer('id')->index()->autoIncrement();
             $table->string('title');
             $table->string('description');
             $table->string('location');
             $table->string('tech');
             $table->string('type');
-            $table->string('remote');
+            $table->string('remote')->default('false');
             $table->string('post_date');
             $table->timestamp('created_at')->nullable();
         });

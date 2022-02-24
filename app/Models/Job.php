@@ -19,6 +19,8 @@ class Job extends Model
         'tech',
         'type',
         'post_date',
+        'created_at',
+        'updated_at',
         'location',
         'remote',
     ];

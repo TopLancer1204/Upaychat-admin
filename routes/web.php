@@ -71,6 +71,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/', 'Backend\FaqController@postPages')->name("faq");
     });
 
+    Route::prefix("jobs")->middleware('Admin')->group(function () {
+        Route::get('/', 'Backend\JobController@index')->name("jobs");
+        Route::get('/job-add', 'Backend\JobController@add')->name("job-add");
+        Route::post('/job-add', 'Backend\JobController@savejob')->name("job-add");
+        Route::get('/job-edit/{faqId}', 'Backend\JobController@getJobEdit')->name("job-edit");
+        Route::post('/job-edit/{faqId}', 'Backend\JobController@postJobEdit')->name("job-edit");
+        Route::post('/', 'Backend\FaqController@postPages')->name("job");
+    });
+
     Route::prefix("pages")->middleware('Admin')->group(function () {
         Route::get('/', 'Backend\PageController@getPages')->name("pages");
         Route::get('/page-add', 'Backend\PageController@getPagesAdd')->name("page-add");

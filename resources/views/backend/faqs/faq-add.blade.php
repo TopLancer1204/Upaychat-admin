@@ -62,7 +62,7 @@
         $("#pageButton").click(function () {
 
             // CKEDITOR.instances['editor'].updateElement();
-            var url = "{{route("faq-add")}}";
+            var url = "{{route('faq-add')}}";
             var form = new FormData($("form")[0]);
 
             $.ajax({

@@ -83,8 +83,7 @@
                         </li>
 
                         <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}}">
-                            <a href="{{route('transactions')}}"
-                                class="nav-link {{ request()->is('transactions') ? 'active' : '' }} {{ request()->is('transactions/users-transactions/*') ? 'active' : '' }}">
+                            <a href="{{route('transactions')}}" class="nav-link {{ request()->is('transactions') ? 'active' : '' }} {{ request()->is('transactions/users-transactions/*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-images"></i>
                                 <p>Transaction Management</p>
                             </a>
@@ -139,8 +138,7 @@
                         </li>
 
 
-                        <li
-                            class="nav-item has-treeview {{\Illuminate\Support\Facades\Auth::user()->roll_id == 2 ? ' ' : 'd-none'}} {{ request()->is('blogs','blogs/blog-add','blogs/blog-edit/*') ? 'menu-open' : '' }}">
+                        <li class="nav-item has-treeview {{\Illuminate\Support\Facades\Auth::user()->roll_id == 2 ? ' ' : 'd-none'}} {{ request()->is('blogs','blogs/blog-add','blogs/blog-edit/*') ? 'menu-open' : '' }}">
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-images"></i>
                                 <p>
@@ -148,38 +146,43 @@
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{route('blogs')}}" class="nav-link {{ request()->is('blogs') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>All Blogs</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{route('blog-add')}}" class="nav-link {{ request()->is('blogs/blog-add') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Add Blog</p>
-                                    </a>
-                                </li>
-                          
-                                <li class="nav-item">
-                                    <a href="{{route('blog-category')}}" class="nav-link {{ request()->is('blogs/blog-category') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Blog Categories</p>
-                                    </a>
-                                </li>
+                        <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}}">
+                            <a href="{{route('jobs')}}" class="nav-link {{ request()->is('faq') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Job Management</p>
+                            </a>
+                        </li>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('blogs')}}" class="nav-link {{ request()->is('blogs') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>All Blogs</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('blog-add')}}" class="nav-link {{ request()->is('blogs/blog-add') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add Blog</p>
+                                </a>
+                            </li>
 
-                                <li class="nav-item">
-                                    <a href="{{route('blog-category-add')}}" class="nav-link {{ request()->is('blogs/blog-category-add') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Add Category</p>
-                                    </a>
-                                </li>
-                            </ul>
+                            <li class="nav-item">
+                                <a href="{{route('blog-category')}}" class="nav-link {{ request()->is('blogs/blog-category') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Blog Categories</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{route('blog-category-add')}}" class="nav-link {{ request()->is('blogs/blog-category-add') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add Category</p>
+                                </a>
+                            </li>
+                        </ul>
                         </li>
 
-                        <li
-                            class="nav-item has-treeview {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}} {{ request()->is('sliders','sliders/slider-add','sliders/slider-edit/*') ? 'menu-open' : '' }}">
+                        <li class="nav-item has-treeview {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}} {{ request()->is('sliders','sliders/slider-add','sliders/slider-edit/*') ? 'menu-open' : '' }}">
                             <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-images"></i>
                                 <p>
@@ -235,34 +238,34 @@
 
     <script>
         $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     </script>
     <script>
         var options = {
-        filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-        filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
-        filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-        filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
-    };
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
     </script>
 
     <script src="{{asset('backend/plugins/datatables/jquery.dataTables.js')}}"></script>
     <script src="{{asset('backend/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
     <script>
-        $(function () {
-        $(".example1").DataTable();
-        $('.example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
+        $(function() {
+            $(".example1").DataTable();
+            $('.example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+            });
         });
-    });
     </script>
 
 

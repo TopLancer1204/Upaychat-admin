@@ -161,7 +161,7 @@
         $("#blogsButton").click(function () {
 
             CKEDITOR.instances['editor'].updateElement();
-            var url = "{{route("blog-add")}}";
+            var url = "{{route('blog-add')}}";
             var form = new FormData($("form")[0]);
 
             $.ajax({
