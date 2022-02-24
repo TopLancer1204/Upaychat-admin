@@ -102,7 +102,7 @@
                                 <p>Content Management</p>
                             </a>
                         </li>
-                        <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 1 ? ' ' : 'd-none'}}">
+                        <li class="nav-item {{\Illuminate\Support\Facades\Auth::user()->roll_id == 2 ? ' ' : 'd-none'}}">
                             <a href="{{route('faq')}}" class="nav-link {{ request()->is('faq') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>FAQ Management</p>
