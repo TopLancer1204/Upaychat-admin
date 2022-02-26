@@ -44,7 +44,7 @@ class FaqController extends Controller
             Faq::create($request->all());
             return response(['status' => 'success', 'title' => 'Success', 'content' => 'FAQ successfully saved']);
         } catch (\Exception $e) {
-            return response(['status' => 'error', 'title' => 'Error!', 'content' => 'FAQ could not saved']);
+            return response(['status' => 'error', 'title' => 'Error!', 'content' => $e]);
         }
     }
 

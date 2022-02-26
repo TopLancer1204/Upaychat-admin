@@ -78,59 +78,59 @@ class JobController extends Controller
 
     public function addbank(Request $request)
     {
-        $user = Auth::user();
-        $userid = $user->id;
+        // $user = Auth::user();
+        // $userid = $user->id;
 
-        $bank = new BankDetail;
+        // $bank = new BankDetail;
 
-        $bank->user_id = $userid;
-        $bank->bank = trim($request->bank_name);
-        $bank->account_no = trim($request->account_no);
-        $bank->account_holder_name = trim($request->account_holder_name);
-        //$bank->branch_city  = trim($request->branch_city);
-        //$bank->ifsc  =    trim($request->ifsc_code);
+        // $bank->user_id = $userid;
+        // $bank->bank = trim($request->bank_name);
+        // $bank->account_no = trim($request->account_no);
+        // $bank->account_holder_name = trim($request->account_holder_name);
+        // //$bank->branch_city  = trim($request->branch_city);
+        // //$bank->ifsc  =    trim($request->ifsc_code);
 
-        if ($bank->save()) {
-            $response['status'] = "true";
-            $response['message'] = "Your bank details saved successfully.";
-            $response['data'] = $bank;
-        } else {
-            $response['status'] = "false";
-            $response['message'] = "Error while adding bank.";
-            $response['data'] = '';
-        }
-        return response()->json($response);
+        // if ($bank->save()) {
+        //     $response['status'] = "true";
+        //     $response['message'] = "Your bank details saved successfully.";
+        //     $response['data'] = $bank;
+        // } else {
+        //     $response['status'] = "false";
+        //     $response['message'] = "Error while adding bank.";
+        //     $response['data'] = '';
+        // }
+        // return response()->json($response);
     }
 
     public function updateaddbank(Request $request)
     {
-        $bankID = $request->bank_id;
-        $bank = BankDetail::find($bankID);
+        // $bankID = $request->bank_id;
+        // $bank = BankDetail::find($bankID);
 
-        $bank->bank = trim($request->bank_name);
-        $bank->account_no = trim($request->account_no);
-        $bank->account_holder_name = trim($request->account_holder_name);
-        //$bank->branch_city  = trim($request->branch_city);
+        // $bank->bank = trim($request->bank_name);
+        // $bank->account_no = trim($request->account_no);
+        // $bank->account_holder_name = trim($request->account_holder_name);
+        // //$bank->branch_city  = trim($request->branch_city);
 
-        try {
-            $bank->save();
-            $data = array('bank_name' => $request->bank_name, 'account_no' => $request->account_no, 'account_holder_name' => $request->account_holder_name);
-            $response['status'] = "true";
-            $response['message'] = "Bank details saved successfully.";
-            $response['data'] = $data;
-            return response()->json($response);
-        } catch (\Exception $e) {
-            $response['status'] = "false";
-            $response['message'] = "Error while updating bank.";
-            $response['data'] = '';
-            return response()->json($response);
-        }
+        // try {
+        //     $bank->save();
+        //     $data = array('bank_name' => $request->bank_name, 'account_no' => $request->account_no, 'account_holder_name' => $request->account_holder_name);
+        //     $response['status'] = "true";
+        //     $response['message'] = "Bank details saved successfully.";
+        //     $response['data'] = $data;
+        //     return response()->json($response);
+        // } catch (\Exception $e) {
+        //     $response['status'] = "false";
+        //     $response['message'] = "Error while updating bank.";
+        //     $response['data'] = '';
+        //     return response()->json($response);
+        // }
     }
     public function deletebank(Request $request)
     {
-        $bankid = $request->bankid;
-        BankDetail::where('id', $bankid)->delete();
-        $response['status'] = "true";
-        return response()->json($response);
+        // $bankid = $request->bankid;
+        // BankDetail::where('id', $bankid)->delete();
+        // $response['status'] = "true";
+        // return response()->json($response);
     }
 }

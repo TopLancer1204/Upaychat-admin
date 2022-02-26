@@ -53,6 +53,7 @@ Route::post('/pendingsms', function () {
 Route::Post('/getJobs', 'API\JobController@getJobs');    
 Route::Post('/getBlogs','API\BlogController@getBlogs');
 Route::Post('/getBlog','API\BlogController@getBlog');
+Route::Post('/getFaqs','API\FaqController@getFaqs');
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/changepassword', 'API\UserController@changepassword');

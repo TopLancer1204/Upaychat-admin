@@ -12,6 +12,7 @@ class Faq extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'question',
         'answer',
     ];
