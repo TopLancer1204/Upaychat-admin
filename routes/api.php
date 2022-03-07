@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::post('/login', 'API\UserController@login');
 Route::post('/logout', 'API\UserController@logout');
 Route::post('/register', 'API\UserController@register');
@@ -50,12 +51,13 @@ Route::post('/pendingsms', function () {
     \App\Models\PendingSms::query()->delete();
     return response()->json($response);
 });
-Route::Post('/getJobs', 'API\JobController@getJobs');    
-Route::Post('/getBlogs','API\BlogController@getBlogs');
-Route::Post('/getBlog','API\BlogController@getBlog');
-Route::Post('/getFaqs','API\FaqController@getFaqs');
+Route::Post('/getJobs', 'API\JobController@getJobs');
+Route::Post('/getBlog', 'API\BlogController@getBlog');
+Route::Post('/getFaqs', 'API\FaqController@getFaqs');
 
 Route::group(['middleware' => 'auth:api'], function () {
+    Route::Post('/getBlogs', 'API\BlogController@getBlogs');
+
     Route::post('/changepassword', 'API\UserController@changepassword');
     Route::post('/updateprofile', 'API\UserController@updateprofile');
     Route::post('/details', 'API\UserController@details');
@@ -97,8 +99,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/withdrawrequest', 'API\TransactionController@addwithdrawrequest');
     Route::post('/addlike', 'API\TransactionController@addlike');
     // **********************************************************************************************************
-    
-    
+
+
     // **********************************************************************************************************
 
     Route::post('/faq', 'API\PageController@faq');
