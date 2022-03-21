@@ -395,9 +395,11 @@ class UserController extends Controller
                 }
                 $user->mobile = $data['mobile'];
             }
+           
             if ($request->has('firstname')) $user->firstname = $data['firstname'];
             if ($request->has('lastname')) $user->lastname = $data['lastname'];
             if ($request->has('birthday')) $user->birthday = $data['birthday'];
+            if ($request->has('email')) $user->birthday = $data['email'];
 
             if ($request->has('profile_image')) {
                 File::delete(public_path($user->avatar));
